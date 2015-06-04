@@ -8,7 +8,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
 		<property name="url"
-			value="jdbc:derby:C:\workspace\BookingDB;create=true;upgrade=true" />
+			value="jdbc:derby:C:\Users\oper4\MyDB;create=true;upgrade=true" />
 	</bean>
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

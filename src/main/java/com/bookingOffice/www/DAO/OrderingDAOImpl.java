@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -77,25 +76,15 @@ public class OrderingDAOImpl implements OrderingDAO {
 	}
 
 	public SellsReport getTotalReport(Date from, Date until) {
-		Query query = em
-				.createQuery(
-						"select sum(f.ticketprice), count(*) from ORDERING o,"
-								+ " FLIGHT f, TICKET t where (o.VALIDDATE between ':from' and ':until') "
-								+ "and t.ORDERID = o.id and t.FLIGHTID = f.ID");
+		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
+				+ " (o.VALIDDATE, count(f.ticketprice), sum(f.ticketprice)  from ORDERING o,"
+						+ " FLIGHT f, TICKET t WHERE (o.VALIDDATE between ':from' and ':until')"
+						+ "and t.ORDERID = o.id and t.FLIGHTID = f.ID";
+		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
 		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
 		query.setParameter("until", ValidityDurationUtil.toValidDate(until));
 		System.out.println("!!! " + query);
-		/*TypedQuery<Double> query = em
-				.createQuery(
-						"select sum(f.ticketprice), count(*) from ORDERING o,"
-								+ " FLIGHT f, TICKET t where (o.VALIDDATE between ':from' and ':until') "
-								+ "and t.ORDERID = o.id and t.FLIGHTID = f.ID",
-						Double.class);*/
-		
-		double total = (Double) query.getResultList().get(0);
-		int quantity = (Integer) query.getResultList().get(1);
-		SellsReport report = new SellsReport(quantity, total);
-		return report;
+		return query.getSingleResult();
 	}
 
 	public List<SellsReport> getDailyReports(Date from, Date until) {
