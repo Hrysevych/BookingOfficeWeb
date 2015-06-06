@@ -31,14 +31,14 @@ public class CustomerServiceImpl implements CustomerService {
 		ticket.setBuyerId(person.getId());
 		ticket.setFlightID(flight.getId());
 		if (flight.getTicketsAvailable() > 0) {
-			person.addTicket(ticket);
+			person.addTicketToCart(ticket);
 		} else {
 			throw new FlightError("Ticket is not available");
 		}
 	}
 
 	public void removeTicket(Person person, int index) {
-		person.removeTicket(index);
+		person.removeTicketFromCart(index);
 
 	}
 

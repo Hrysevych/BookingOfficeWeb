@@ -28,11 +28,11 @@ public class Person {
 		return cart;
 	}
 
-	public void addTicket(Ticket ticket) {
+	public void addTicketToCart(Ticket ticket) {
 		cart.add(ticket);
 	}
 
-	public void removeTicket(int index) {
+	public void removeTicketFromCart(int index) {
 		cart.remove(index);
 	}
 
