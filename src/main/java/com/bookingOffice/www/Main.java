@@ -34,21 +34,23 @@ public class Main {
 		SecurityService securityService = (SecurityService) context
 				.getBean("securityServiceImpl");
 
-		Person person = new Person();
-		
-		
-		/*Flight flight = new Flight("KBP",
-				Timestamp.valueOf("2015-05-28 06:00:00"), "JFK",
-				Timestamp.valueOf("2015-05-28 12:00:00"), 15.2);
-		administratorService.addFlight(flight);
+		// Person person = new Person();
 
-		SellsReport report = analyticService.getTotalReport(
-				Date.valueOf("2014-01-01"), Date.valueOf("2016-01-01"));
-		System.out.println(report);*/
+		/*
+		 * Flight flight = new Flight("KBP",
+		 * Timestamp.valueOf("2015-05-28 06:00:00"), "JFK",
+		 * Timestamp.valueOf("2015-05-28 12:00:00"), 15.2);
+		 * administratorService.addFlight(flight);
+		 * 
+		 * SellsReport report = analyticService.getTotalReport(
+		 * Date.valueOf("2014-01-01"), Date.valueOf("2016-01-01"));
+		 * System.out.println(report);
+		 */
 
-		
-		List<Flight> flights = administratorService.getFlights(); for (Flight
-		flight2 : flights) { System.out.println(flight2); }
-		
+		List<Flight> flights = administratorService.getFlights();
+		for (Flight flight2 : flights) {
+			System.out.println(flight2);
+		}
+
 	}
 }
