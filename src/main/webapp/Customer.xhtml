@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h2>Customer's page</h2> 
+    #{customerBean.refreshList()}
+    <h:form>
+			<h:panelGrid columns="1">
+				<h:dataTable value="#{customerBean.flights}" var="flight"
+					styleClass="FlightTable" headerClass="FlightTableHeader"
+					rowClasses="FlightTableOddRow, FlightTableEvenRow">
+					<h:column>
+						<f:facet name="header">Id</f:facet> 
+					#{flight.id} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Departure</f:facet> 
+				#{flight.departure} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Departure Time</f:facet> 
+				#{flight.departureTime} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Arrival</f:facet> 
+				#{flight.arrival} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Arrival Time</f:facet> 
+				#{flight.arrivalTime} 
+			</h:column>
+				</h:dataTable>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

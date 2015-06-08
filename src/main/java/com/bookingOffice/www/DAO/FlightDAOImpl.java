@@ -21,7 +21,11 @@ public class FlightDAOImpl implements FlightDAO {
 	@Transactional
 	public void addFlight(Flight flight) {
 		// if id=0 persist else merge
-		em.persist(flight);
+		if (flight.getId() == 0) {
+			em.persist(flight);
+		} else {
+			em.merge(flight);
+		}
 
 	}
 
