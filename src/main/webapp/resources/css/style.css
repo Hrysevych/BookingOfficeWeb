@@ -1,27 +1,27 @@
 @CHARSET "UTF-8";
 
-/* .merchantTable {
+.flightTable {
 	border-collapse: collapse;
 	border: 1px solid #000000;
 }
 
-.merchantTableHeader {
+.flightTableHeader {
 	text-align: center;
 	background: none repeat scroll 0 0 #B5B5B5;
 	border-bottom: 1px solid #000000;
 	padding: 2px;
 }
 
-.merchantTableOddRow {
+.flightTableOddRow {
 	text-align: center;
 	background: none repeat scroll 0 0 #FFFFFFF;
 }
 
-.merchantTableEvenRow {
+.flightTableEvenRow {
 	text-align: center;
 	background: none repeat scroll 0 0 #D3D3D3;
 }
- */
+
 a{
 	background-color: brown;
 	color: white;

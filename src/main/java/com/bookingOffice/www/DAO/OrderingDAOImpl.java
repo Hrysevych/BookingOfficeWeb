@@ -77,9 +77,9 @@ public class OrderingDAOImpl implements OrderingDAO {
 
 	public SellsReport getTotalReport(Date from, Date until) {
 		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
-				+ " (o.VALIDDATE, count(f.ticketprice), sum(f.ticketprice)  from ORDERING o,"
-						+ " FLIGHT f, TICKET t WHERE (o.VALIDDATE between ':from' and ':until')"
-						+ "and t.ORDERID = o.id and t.FLIGHTID = f.ID";
+				+ " (max(o.VALIDDATE), count(f.ticketprice), sum(f.ticketprice)  from ORDERING o,"
+				+ " FLIGHT f, TICKET t WHERE (o.VALIDDATE between ':from' and ':until')"
+				+ "and t.ORDERID = o.id and t.FLIGHTID = f.ID";
 		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
 		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
 		query.setParameter("until", ValidityDurationUtil.toValidDate(until));
