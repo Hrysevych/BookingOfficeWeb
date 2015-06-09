@@ -20,7 +20,7 @@ public class CustomerBean implements Serializable {
 	private static final long serialVersionUID = -7123610664654371778L;
 	private List<Flight> flights = null;
 	private Flight flight = null;
-	private String testString = "testStringggggg";
+
 	/*@Inject
 	private CustomerService customerService;*/
 	@Inject
@@ -57,27 +57,6 @@ public class CustomerBean implements Serializable {
 	public void setFlight(Flight flight) {
 		this.flight = flight;
 	}
-
-	/**
-	 * @return the testString
-	 */
-	public String getTestString() {
-		String answer = "";
-		if (flights.isEmpty() || flights == null) {
-			answer = "0";
-		} else {
-			answer += flights.size();
-		}
-		return answer;
-	}
-
-	/**
-	 * @param testString the testString to set
-	 */
-	public void setTestString(String testString) {
-		this.testString = testString;
-	}
-
 	
 
 }

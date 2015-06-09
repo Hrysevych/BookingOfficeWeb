@@ -10,8 +10,7 @@
 	<ui:define name="content">
 		<h2>Customer's page</h2> 
     #{customerBean.refreshList()}
-    <h1>#{customerBean.testString}</h1>
-    <h:form>
+		<h:form>
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{customerBean.flights}" var="flight"
 					styleClass="FlightTable" headerClass="FlightTableHeader"
