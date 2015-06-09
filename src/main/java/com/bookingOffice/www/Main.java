@@ -47,10 +47,13 @@ public class Main {
 		 * System.out.println(report);
 		 */
 
-		List<Flight> flights = administratorService.getFlights();
-		for (Flight flight2 : flights) {
-			System.out.println(flight2);
-		}
+		SellsReport report = analyticService.getTotalReport(
+				Date.valueOf("2014-01-01"), Date.valueOf("2016-01-01"));
+		System.out.println(report);
+		/*
+		 * List<Flight> flights = administratorService.getFlights(); for (Flight
+		 * flight2 : flights) { System.out.println(flight2); }
+		 */
 
 	}
 }

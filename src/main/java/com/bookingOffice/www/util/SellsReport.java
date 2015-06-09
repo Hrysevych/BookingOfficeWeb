@@ -56,10 +56,16 @@ public class SellsReport {
 	 * @param ticketsQuantity
 	 * @param totalSum
 	 */
-	public SellsReport(Date date, int ticketsQuantity, double totalSum) {
+	public SellsReport(Object date, Long ticketsQuantity, double totalSum) {
 		super();
-		this.date = date;
-		this.ticketsQuantity = ticketsQuantity;
+		this.date = (Date) date;
+		this.ticketsQuantity = ticketsQuantity.intValue();
 		this.totalSum = totalSum;
+	}
+
+	@Override
+	public String toString() {
+		return "SellsReport [date=" + date + ", ticketsQuantity="
+				+ ticketsQuantity + ", totalSum=" + totalSum + "]";
 	}
 }

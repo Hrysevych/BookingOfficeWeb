@@ -77,13 +77,19 @@ public class OrderingDAOImpl implements OrderingDAO {
 
 	public SellsReport getTotalReport(Date from, Date until) {
 		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
-				+ " (max(o.VALIDDATE), count(f.ticketprice), sum(f.ticketprice)  from ORDERING o,"
-				+ " FLIGHT f, TICKET t WHERE (o.VALIDDATE between ':from' and ':until')"
-				+ "and t.ORDERID = o.id and t.FLIGHTID = f.ID";
+				+ " (max(o.validDate), count(f.ticketPrice), sum(f.ticketPrice))"
+				+ "from Ordering o, Flight f, Ticket t "
+				+ "WHERE (o.validDate between '2014-01-01' and '2016-12-31') and t.orderId = o.id and t.flightID = f.id";
+		/*String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
+				+ " (max(o.validDate), count(f.ticketPrice), sum(f.ticketPrice)"
+				+ "from ORDERING o, FLIGHT f, TICKET t "
+				+ "WHERE (o.validDate between ':from' and ':until') and t.orderId = o.id and t.flightID = f.id";*/
 		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
-		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
-		query.setParameter("until", ValidityDurationUtil.toValidDate(until));
-		System.out.println("!!! " + query);
+//		query.setParameter("from", "01-01-2014");
+//		query.setParameter("until", "01-01-2016");
+/*		query.setParameter("from", ValidityDurationUtil.toValidDate(from).toString());
+		query.setParameter("until", ValidityDurationUtil.toValidDate(until).toString());
+*/		System.out.println("!!! " + query);
 		return query.getSingleResult();
 	}
 
