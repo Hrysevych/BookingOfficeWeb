@@ -92,7 +92,7 @@ public class OrderingDAOImpl implements OrderingDAO {
 				+ "from Ordering o, Flight f, Ticket t "
 				+ "WHERE (o.validDate between '2014-01-01' and '2016-12-31') "
 				+ "and (t.orderId = o.id) and (t.flightID = f.id) "
-				+ " group by o.validDate";
+				+ "group by o.validDate";
 		/*String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
 				+ " (o.validDate, count(f.ticketPrice), sum(f.ticketPrice)) "
 				+ "from Ordering o, Flight f, Ticket t "

@@ -52,15 +52,15 @@ public class FlightDAOImpl implements FlightDAO {
 				.createQuery(
 						"SELECT f FROM Flight f WHERE f.departure = :departure and "
 								+ "f.arrival = :arrival and "
-								+ "f.departureTime >= :departureTime and f.ticketsTotal > "
+								+ "f.arrivalTime >= :arrivalTime and f.ticketsTotal > "
 								+ "(f.ticketsBooked + f.ticketsSold) and f.deleted = 0",
 						Flight.class);
 		query.setParameter("departure", flight.getDeparture());
 		query.setParameter("arrival", flight.getArrival());
-		if (flight.getDepartureTime() != null) {
-			query.setParameter("departureTime", flight.getDepartureTime());
+		if (flight.getArrivalTime() != null) {
+			query.setParameter("arrivalTime", flight.getArrivalTime());
 		} else {
-			query.setParameter("departureTime", Timestamp.from(Instant.now()));
+			query.setParameter("arrivalTime", Timestamp.from(Instant.now()));
 		}
 		return query.getResultList();
 	}

@@ -8,7 +8,6 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Customer's page</h2>
-	#{customerBean.getFlightsFiltered()}
     	<h:form>
 			<h:panelGrid columns="3">
 				<h:outputText value="Departure:"></h:outputText>
@@ -25,13 +24,15 @@
 
 				<h:outputText value="Arrival Time:"></h:outputText>
 				<h:inputText id="arrivalTime"
-					value="#{customerBean.flight.arrivalTime}" required="true"
+					value="#{customerBean.arrivalTime}" required="false"
+					validatorMessage="#{msgs.fieldRequired}"
 					requiredMessage="#{msgs.fieldRequired}">
+					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 				</h:inputText>
 				<h:message for="arrivalTime" style="color:red" />
 			</h:panelGrid>
 			<h:commandButton value="Submit"
-				action="#{customerBean.getFlightsFiltered()}"></h:commandButton>
+				action="#{customerBean.getFlightsFiltered}"></h:commandButton>
 		</h:form>
 
 		<h:form>

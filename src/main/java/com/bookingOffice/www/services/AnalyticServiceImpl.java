@@ -3,6 +3,7 @@ package com.bookingOffice.www.services;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,8 +28,8 @@ public class AnalyticServiceImpl implements AnalyticService {
 		return orderingDAO.getTotalReport(from, until);
 	}
 
-	public ArrayList<SellsReport> getDailyReports(Date from, Date until) {
-		return getDailyReports(from, until);
+	public List<SellsReport> getDailyReports(Date from, Date until) {
+		return orderingDAO.getDailyReports(from, until);
 	}
 
 	public static class CompareByDate implements Comparator<Ordering> {

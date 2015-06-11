@@ -1,5 +1,6 @@
 package com.bookingOffice.www.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,11 +15,13 @@ import com.bookingOffice.www.services.CustomerService;
 @Scope("session")
 public class CustomerBean {
 	private List<Flight> flights = null;
-	public Flight flight = null;
+	private Flight flight = null;
+	private java.util.Date arrivalTime = new Date(); 
 	@Inject
 	private CustomerService customerService;
 
 	public String getFlightsFiltered() {
+		flight.setArrivalTime(this.arrivalTime);
 		flights = customerService.getFlightsFiltered(flight);
 		return "CustomerResult";
 	}
@@ -55,6 +58,22 @@ public class CustomerBean {
 	 */
 	public void setFlight(Flight flight) {
 		this.flight = flight;
+	}
+
+
+	/**
+	 * @return the arrivalTime
+	 */
+	public java.util.Date getArrivalTime() {
+		return arrivalTime;
+	}
+
+
+	/**
+	 * @param arrivalTime the arrivalTime to set
+	 */
+	public void setArrivalTime(java.util.Date arrivalTime) {
+		this.arrivalTime = arrivalTime;
 	}
 
 

@@ -24,10 +24,10 @@
 
 				<h:outputText value="Arrival Time:"></h:outputText>
 				<h:inputText id="arrivalTime"
-					value="#{customerBean.flight.arrivalTime}" required="true"
+					value="#{customerBean.arrivalTime}" required="false"
 					validatorMessage="#{msgs.fieldRequired}"
 					requiredMessage="#{msgs.fieldRequired}">
-					<f:convertDateTime pattern="yyyy-MM-dd" type="both"/>
+					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 				</h:inputText>
 				<h:message for="arrivalTime" style="color:red" />
 			</h:panelGrid>
