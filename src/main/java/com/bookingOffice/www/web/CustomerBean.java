@@ -1,6 +1,5 @@
-package com.bookingOffice.www.webBeans;
+package com.bookingOffice.www.web;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,26 +8,26 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.DAO.Flight;
-import com.bookingOffice.www.services.AdministratorService;
+import com.bookingOffice.www.services.CustomerService;
 
 @Named
 @Scope("session")
-public class CustomerBean implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7123610664654371778L;
+public class CustomerBean {
 	private List<Flight> flights = null;
-	private Flight flight = null;
-
-	/*@Inject
-	private CustomerService customerService;*/
+	public Flight flight = null;
 	@Inject
-	private AdministratorService administratorService;
+	private CustomerService customerService;
 
-	public void refreshList() {
-		this.flights = administratorService.getFlights();
+	public String getFlightsFiltered() {
+		flights = customerService.getFlightsFiltered(flight);
+		return "CustomerResult";
 	}
+
+	
+	public CustomerBean() {
+		flight = new Flight();
+	}
+
 
 	/**
 	 * @return the flights
@@ -57,6 +56,7 @@ public class CustomerBean implements Serializable {
 	public void setFlight(Flight flight) {
 		this.flight = flight;
 	}
-	
+
+
 
 }

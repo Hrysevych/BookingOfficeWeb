@@ -79,29 +79,28 @@ public class OrderingDAOImpl implements OrderingDAO {
 		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
 				+ " (max(o.validDate), count(f.ticketPrice), sum(f.ticketPrice))"
 				+ "from Ordering o, Flight f, Ticket t "
-				+ "WHERE (o.validDate between '2014-01-01' and '2016-12-31') and t.orderId = o.id and t.flightID = f.id";
-		/*String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
-				+ " (max(o.validDate), count(f.ticketPrice), sum(f.ticketPrice)"
-				+ "from ORDERING o, FLIGHT f, TICKET t "
-				+ "WHERE (o.validDate between ':from' and ':until') and t.orderId = o.id and t.flightID = f.id";*/
+				+ "WHERE (o.validDate between :from and :until) and t.orderId = o.id and t.flightID = f.id";
 		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
-//		query.setParameter("from", "01-01-2014");
-//		query.setParameter("until", "01-01-2016");
-/*		query.setParameter("from", ValidityDurationUtil.toValidDate(from).toString());
-		query.setParameter("until", ValidityDurationUtil.toValidDate(until).toString());
-*/		System.out.println("!!! " + query);
+		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
+		query.setParameter("until", ValidityDurationUtil.toValidDate(until));
 		return query.getSingleResult();
 	}
 
 	public List<SellsReport> getDailyReports(Date from, Date until) {
-		TypedQuery<SellsReport> query = em
-				.createQuery(
-						"select o.VALIDDATE, sum(f.ticketprice), count(*) from ORDERING o, FLIGHT f, TICKET t"
-								+ "where (o.VALIDDATE between ':from' and ':until') and (t.ORDERID = o.id)"
-								+ "and (t.FLIGHTID = f.ID) group by o.VALIDDATE ",
-						SellsReport.class);
-		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
-		query.setParameter("until", ValidityDurationUtil.toValidDate(until));
+		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
+				+ " (o.validDate, count(f.ticketPrice), sum(f.ticketPrice)) " 
+				+ "from Ordering o, Flight f, Ticket t "
+				+ "WHERE (o.validDate between '2014-01-01' and '2016-12-31') "
+				+ "and (t.orderId = o.id) and (t.flightID = f.id) "
+				+ " group by o.validDate";
+		/*String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
+				+ " (o.validDate, count(f.ticketPrice), sum(f.ticketPrice)) "
+				+ "from Ordering o, Flight f, Ticket t "
+				+ "WHERE (o.validDate between :from and :until) and (t.orderId = o.id) and (t.flightID = f.id) "
+				+ "group by o.validDate";*/
+		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
+		/*query.setParameter("from", ValidityDurationUtil.toValidDate(from));
+		query.setParameter("until", ValidityDurationUtil.toValidDate(until));*/
 		return query.getResultList();
 	}
 

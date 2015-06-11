@@ -2,6 +2,7 @@ package com.bookingOffice.www;
 
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -46,10 +47,15 @@ public class Main {
 		 * Date.valueOf("2014-01-01"), Date.valueOf("2016-01-01"));
 		 * System.out.println(report);
 		 */
-
 		SellsReport report = analyticService.getTotalReport(
 				Date.valueOf("2014-01-01"), Date.valueOf("2016-01-01"));
 		System.out.println(report);
+		ArrayList<SellsReport> reports = analyticService.getDailyReports(
+				Date.valueOf("2014-01-01"), Date.valueOf("2016-01-01"));
+		for (SellsReport sellsReport : reports) {
+			System.out.println(sellsReport);
+		}
+		
 		/*
 		 * List<Flight> flights = administratorService.getFlights(); for (Flight
 		 * flight2 : flights) { System.out.println(flight2); }

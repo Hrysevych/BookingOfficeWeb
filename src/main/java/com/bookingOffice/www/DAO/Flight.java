@@ -1,5 +1,6 @@
 package com.bookingOffice.www.DAO;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
@@ -130,6 +131,10 @@ public class Flight {
 	 */
 	public void setArrivalTime(Timestamp arrivalTime) {
 		this.arrivalTime = arrivalTime;
+	}
+	
+	public void setArrivalTime(Date arrivalTime) {
+		this.arrivalTime = Timestamp.from(arrivalTime.toInstant());
 	}
 
 	/**
