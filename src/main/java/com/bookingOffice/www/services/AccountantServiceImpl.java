@@ -25,7 +25,6 @@ public class AccountantServiceImpl implements AccountantService {
 	public void markTicketSold(int id) {
 		Ticket ticket = ticketDAO.getTicket(id);
 		Flight flight = flightDAO.getFlight(ticket.getFlightID());
-		ticketDAO.markTicketSold(id);
 		flight.setTicketsBooked(flight.getTicketsBooked() - 1);
 		flight.setTicketsSold(flight.getTicketsSold() + 1);
 	}

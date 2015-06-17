@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h2>Customer's cart</h2>
+		<h:link value="Return to search" outcome="CustomerResult"></h:link>
+		<h:form>
+			<h:panelGrid columns="1">
+				<h:dataTable value="#{customerBean.tickets}" var="ticket"
+					styleClass="Table" headerClass="TableHeader"
+					rowClasses="TableOddRow, TableEvenRow">
+					<h:column>
+						<f:facet name="header">Departure</f:facet> 
+				#{ticket.departure}
+			</h:column>
+					<h:column>
+						<f:facet name="header">Departure Time</f:facet> 
+				#{ticket.departureTime}
+			</h:column>
+					<h:column>
+						<f:facet name="header">Arrival</f:facet> 
+				#{ticket.arrival}
+			</h:column>
+					<h:column>
+						<f:facet name="header">Arrival Time</f:facet> 
+				#{ticket.arrivalTime}
+			</h:column>
+					<h:column>
+						<f:facet name="header">Ticket Price</f:facet> 
+				#{ticket.ticketPrice}
+			</h:column>
+					<h:column>
+						<f:facet name="header">First Name</f:facet>
+						<h:inputText id="firstName" value="#{ticket.firstName}">
+						</h:inputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Last Name</f:facet>
+						<h:inputText id="lastName" value="#{ticket.lastName}">
+						</h:inputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Passport</f:facet>
+						<h:inputText id="passport" value="#{ticket.passport}">
+						</h:inputText>
+					</h:column>
+					<h:column>
+					<h:commandButton value="Remove ticket" action="#{customerBean.removeTicket(ticket)}">
+				</h:commandButton>
+					</h:column>
+					
+				</h:dataTable>
+				<h:commandButton value="Submit"
+				action="#{customerBean.submitCart}"></h:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

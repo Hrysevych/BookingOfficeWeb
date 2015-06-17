@@ -2,6 +2,7 @@ package com.bookingOffice.www.DAO;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -82,6 +83,17 @@ public class FlightDAOImpl implements FlightDAO {
 	public List<Flight> getFlights() {
 		TypedQuery<Flight> query = em.createQuery("SELECT f FROM Flight f",
 				Flight.class);
+		return query.getResultList();
+	}
+
+	public List<Flight> getFlightsForCart(List<Ticket> tickets) {
+		ArrayList<Integer> flightIds = new ArrayList<>();
+		for (Ticket ticket : tickets) {
+			flightIds.add(ticket.getFlightID());
+		}
+		String sql = "SELECT f FROM Flight f WHERE f.id in :flightIds";
+		TypedQuery<Flight> query = em.createQuery(sql, Flight.class);
+		query.setParameter("flightIds", flightIds);
 		return query.getResultList();
 	}
 

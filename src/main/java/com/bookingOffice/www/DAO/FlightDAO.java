@@ -16,4 +16,6 @@ public interface FlightDAO {
 	public List<Flight> getFlightsFiltered(Flight flight);
 	
 	public List<Flight> getFlights();
+
+	public List<Flight> getFlightsForCart(List<Ticket> cart);
 }

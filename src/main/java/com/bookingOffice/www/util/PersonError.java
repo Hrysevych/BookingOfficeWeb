@@ -2,8 +2,6 @@ package com.bookingOffice.www.util;
 
 public class PersonError extends Error {
 
-
-	
 	/**
 	 * 
 	 */

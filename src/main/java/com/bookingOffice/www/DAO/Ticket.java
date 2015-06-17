@@ -5,18 +5,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.bookingOffice.www.util.CartTickets;
+
 @Entity
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int orderId;
 	private int flightID;
 	private String firstName;
 	private String lastName;
-	private int buyerId;
-	private int orderId;
-	private int payed;
-	
+	private String passport;
+
+
+	public Ticket(CartTickets cartContent) {
+		this.flightID = cartContent.getFlightId();
+		this.firstName = cartContent.getFirstName();
+		this.lastName = cartContent.getLastName();
+		this.passport = cartContent.getPassport();
+	}
+
+	public Ticket() {
+	}
 
 	/**
 	 * @return the flightID
@@ -64,36 +75,6 @@ public class Ticket {
 	}
 
 	/**
-	 * @return the payed
-	 */
-	public int getPayed() {
-		return payed;
-	}
-
-	/**
-	 * @param payed
-	 *            the payed to set
-	 */
-	public void setPayed(int payed) {
-		this.payed = payed;
-	}
-
-	/**
-	 * @return the buyerId
-	 */
-	public int getBuyerId() {
-		return buyerId;
-	}
-
-	/**
-	 * @param buyerId
-	 *            the buyerId to set
-	 */
-	public void setBuyerId(int buyerId) {
-		this.buyerId = buyerId;
-	}
-
-	/**
 	 * @return the orderNumber
 	 */
 	public int getOrderId() {
@@ -108,15 +89,39 @@ public class Ticket {
 		this.orderId = orderId;
 	}
 
-
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the passport
+	 */
+	public String getPassport() {
+		return passport;
+	}
+
+	/**
+	 * @param passport
+	 *            the passport to set
+	 */
+	public void setPassport(String passport) {
+		this.passport = passport;
+	}
+
 	public String toString() {
-		return "Ticket [flightID=" + flightID + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", buyerId=" + buyerId
-				+ ", payed=" + payed + "]";
+		return "Ticket [id=" + id + ", orderId=" + orderId + ", flightID="
+				+ flightID + ", "
+				+ (firstName != null ? "firstName=" + firstName + ", " : "")
+				+ (lastName != null ? "lastName=" + lastName + ", " : "")
+				+ (passport != null ? "passport=" + passport : "") + "]";
 	}
 
 }

@@ -52,7 +52,13 @@ public class OrderingDAOImpl implements OrderingDAO {
 
 	@Transactional
 	public void addOrdering(Ordering ordering) {
-		em.persist(ordering);
+		if (ordering.getId() == 0) {
+			em.persist(ordering);
+		}
+		else {
+			em.merge(ordering);
+		}
+		
 
 	}
 
@@ -93,14 +99,7 @@ public class OrderingDAOImpl implements OrderingDAO {
 				+ "WHERE (o.validDate between '2014-01-01' and '2016-12-31') "
 				+ "and (t.orderId = o.id) and (t.flightID = f.id) "
 				+ "group by o.validDate";
-		/*String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
-				+ " (o.validDate, count(f.ticketPrice), sum(f.ticketPrice)) "
-				+ "from Ordering o, Flight f, Ticket t "
-				+ "WHERE (o.validDate between :from and :until) and (t.orderId = o.id) and (t.flightID = f.id) "
-				+ "group by o.validDate";*/
 		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
-		/*query.setParameter("from", ValidityDurationUtil.toValidDate(from));
-		query.setParameter("until", ValidityDurationUtil.toValidDate(until));*/
 		return query.getResultList();
 	}
 

@@ -38,8 +38,8 @@
 		<h:form>
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{customerBean.flights}" var="flight"
-					styleClass="FlightTable" headerClass="FlightTableHeader"
-					rowClasses="FlightTableOddRow, FlightTableEvenRow">
+					styleClass="Table" headerClass="TableHeader"
+					rowClasses="TableOddRow, TableEvenRow">
 					<h:column>
 						<f:facet name="header">Id</f:facet> 
 					#{flight.id} 
@@ -60,8 +60,13 @@
 						<f:facet name="header">Arrival Time</f:facet> 
 				#{flight.arrivalTime} 
 			</h:column>
+			<h:column>
+				<h:commandButton value="Add to cart" action="#{customerBean.addTicketToCart(flight)}">
+				</h:commandButton>
+			</h:column>
 				</h:dataTable>
 			</h:panelGrid>
+			<h:link value="CustomerCart" outcome="CustomerCart"></h:link>
 		</h:form>
 
 	</ui:define>

@@ -16,17 +16,12 @@ public class TicketDAOImpl implements TicketDAO {
 
 	@Transactional
 	public void addTicket(Ticket ticket) {
-		em.persist(ticket);
-
-	}
-
-	@Transactional
-	public void markTicketSold(int id) {
-		Ticket ticket = em.find(Ticket.class, id);
-		if (ticket != null) {
-			ticket.setPayed(1);
+		if (ticket.getId() == 0) {
+			em.persist(ticket);
+		} else {
+			em.merge(ticket);
 		}
-
+		
 	}
 
 	public List<Ticket> getTicketsByPerson(Person person) {
@@ -38,8 +33,7 @@ public class TicketDAOImpl implements TicketDAO {
 
 	public List<Ticket> getTicketsByOrder(int orderId) {
 		TypedQuery<Ticket> query = em.createQuery(
-				"SELECT t FROM Ticket t WHERE orderId = :order",
-				Ticket.class);
+				"SELECT t FROM Ticket t WHERE orderId = :order", Ticket.class);
 		query.setParameter("order", orderId);
 		return query.getResultList();
 	}

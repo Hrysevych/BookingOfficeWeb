@@ -6,10 +6,10 @@ import com.bookingOffice.www.DAO.Ordering;
 
 
 public interface AccountantService {
-
-	public void markTicketSold(int id);
 	
 	public void markOrderingSold(int orderId);
+	
+	public void markTicketSold(int id);
 
 	public List<Ordering> findOrderingsNotExpired();
 }

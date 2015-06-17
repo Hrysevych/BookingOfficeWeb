@@ -1,12 +1,9 @@
 package com.bookingOffice.www.DAO;
 
-import java.util.ArrayList;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.bookingOffice.www.util.Roles;
 
@@ -16,32 +13,12 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String email;
-	private String password;
+	private int passwordHash;
 	private String firstName;
 	private String lastName;
 	private int role;
 	private int active;
-	@Transient
-	private ArrayList<Ticket> cart;
-
-	public ArrayList<Ticket> getCart() {
-		return cart;
-	}
-
-	public void addTicketToCart(Ticket ticket) {
-		cart.add(ticket);
-	}
-
-	public void removeTicketFromCart(int index) {
-		cart.remove(index);
-	}
-
-	public void fillTicketInfo(int index, String firstName, String lastName) {
-		Ticket ticket = cart.get(index);
-		ticket.setFirstName(firstName);
-		ticket.setLastName(lastName);
-		cart.set(index, ticket);
-	}
+	
 
 	/**
 	 * @return the nickname
@@ -57,19 +34,6 @@ public class Person {
 		this.email = email;
 	}
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	/**
 	 * @return the firstName
@@ -135,9 +99,6 @@ public class Person {
 	 * @param cart
 	 *            the cart to set
 	 */
-	public void setCart(ArrayList<Ticket> cart) {
-		this.cart = cart;
-	}
 
 	public String toString() {
 		return "Person [First name=" + firstName + ", Last name=" + lastName
@@ -146,5 +107,33 @@ public class Person {
 
 	public int getId() {
 		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(int role) {
+		this.role = role;
+	}
+
+	/**
+	 * @return the passwordHash
+	 */
+	public int getPasswordHash() {
+		return passwordHash;
+	}
+
+	/**
+	 * @param passwordHash the passwordHash to set
+	 */
+	public void setPasswordHash(int passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 }

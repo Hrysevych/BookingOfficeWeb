@@ -8,8 +8,6 @@ public interface TicketDAO {
 
 	public void addTicket(Ticket ticket);
 
-	public void markTicketSold(int id);
-
 	public List<Ticket> getTicketsByPerson(Person person);
 
 	public List<Ticket> getTicketsByOrder(int orderId);
