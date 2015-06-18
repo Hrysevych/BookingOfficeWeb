@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.bookingOffice.www.util.SellsReport;
 
-public interface AnalyticService {
+public interface AnalystService {
 
 	public SellsReport getTotalReport(Date from, Date until);
 

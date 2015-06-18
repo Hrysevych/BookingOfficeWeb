@@ -3,12 +3,15 @@ package com.bookingOffice.www.services;
 import java.util.List;
 
 import com.bookingOffice.www.DAO.Flight;
+import com.bookingOffice.www.DAO.Ordering;
 
 public interface AdministratorService {
 
 	public Flight getFlight(int id);
 	
 	public List<Flight> getFlights();
+	
+	public List<Ordering> getInvalidOrderings();
 
 	public void addFlight(Flight flight);
 	

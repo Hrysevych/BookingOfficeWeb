@@ -38,7 +38,8 @@
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{customerBean.flights}" var="flight"
 					styleClass="Table" headerClass="TableHeader"
-					rowClasses="TableOddRow, TableEvenRow">
+					rowClasses="TableOddRow, TableEvenRow"
+					rendered="#{not empty customerBean.flights}">
 					<h:column>
 						<f:facet name="header">Departure</f:facet> 
 				#{flight.departure} 
@@ -66,7 +67,7 @@
 					</h:column>
 				</h:dataTable>
 			</h:panelGrid>
-			<h:link value="CustomerCart" outcome="CustomerCart"></h:link>
+			<h:link value="Cart" outcome="Cart" rendered="#{not empty customerBean.cart}"></h:link>
 		</h:form>
 
 	</ui:define>

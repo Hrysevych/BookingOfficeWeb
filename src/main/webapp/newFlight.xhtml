@@ -21,7 +21,7 @@
 				<h:outputText value="Departure Time:"></h:outputText>
 				<h:inputText id="departureTime"
 					value="#{administratorBean.departureTime}" required="false"
-					validatorMessage="#{msgs.fieldRequired}"
+					validatorMessage="#{msgs.dateFormat}"
 					requiredMessage="#{msgs.fieldRequired}">
 					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 				</h:inputText>
@@ -37,7 +37,7 @@
 				<h:outputText value="Arrival Time:"></h:outputText>
 				<h:inputText id="arrivalTime"
 					value="#{administratorBean.arrivalTime}" required="false"
-					validatorMessage="#{msgs.fieldRequired}"
+					validatorMessage="#{msgs.dateFormat}"
 					requiredMessage="#{msgs.fieldRequired}">
 					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 				</h:inputText>
@@ -74,8 +74,9 @@
 			<h:commandButton value="Submit"
 				action="#{administratorBean.addFlight}"></h:commandButton>
 				<h:outputText value="	"></h:outputText>
+			
 			<h:commandButton value="Cancel"
-				action="Administrator"></h:commandButton>
+				action="Administrator" immediate="true"></h:commandButton>
 				<h:outputText value="	"></h:outputText>
 			<h:commandButton value="DELETE"
 				action="#{administratorBean.deleteFlight()}"

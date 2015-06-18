@@ -75,4 +75,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 	public void deleteFlight(int id) {
 		flightDAO.deleteFlight(id);
 	}
+
+	@Override
+	public List<Ordering> getInvalidOrderings() {
+		return orderingDAO.getInvalidOrderings();
+	}
 }

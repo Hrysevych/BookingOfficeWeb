@@ -8,10 +8,10 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Customer's cart</h2>
-		<h:link value="Return to search" outcome="CustomerResult"></h:link>
+		<h:link value="Return to search" outcome="Customer"></h:link>
 		<h:form>
 			<h:panelGrid columns="1">
-				<h:dataTable value="#{customerBean.tickets}" var="ticket"
+				<h:dataTable value="#{customerBean.cart}" var="ticket"
 					styleClass="Table" headerClass="TableHeader"
 					rowClasses="TableOddRow, TableEvenRow">
 					<h:column>
@@ -36,27 +36,31 @@
 			</h:column>
 					<h:column>
 						<f:facet name="header">First Name</f:facet>
-						<h:inputText id="firstName" value="#{ticket.firstName}">
+						<h:inputText id="firstName" value="#{ticket.firstName}"
+							required="true" requiredMessage="#{msgs.fieldRequired}">
 						</h:inputText>
 					</h:column>
 					<h:column>
 						<f:facet name="header">Last Name</f:facet>
-						<h:inputText id="lastName" value="#{ticket.lastName}">
+						<h:inputText id="lastName" value="#{ticket.lastName}"
+							required="true" requiredMessage="#{msgs.fieldRequired}">
 						</h:inputText>
 					</h:column>
 					<h:column>
 						<f:facet name="header">Passport</f:facet>
-						<h:inputText id="passport" value="#{ticket.passport}">
+						<h:inputText id="passport" value="#{ticket.passport}"
+							required="true" requiredMessage="#{msgs.fieldRequired}">
 						</h:inputText>
 					</h:column>
 					<h:column>
-					<h:commandButton value="Remove ticket" action="#{customerBean.removeTicket(ticket)}">
-				</h:commandButton>
+						<h:commandButton value="Remove ticket"
+							action="#{customerBean.removeTicket(ticket)}"
+							immediate="true">
+						</h:commandButton>
 					</h:column>
-					
 				</h:dataTable>
-				<h:commandButton value="Submit"
-				action="#{customerBean.submitCart}"></h:commandButton>
+				<h:commandButton value="Submit" action="#{customerBean.submitCart}"></h:commandButton>
+				
 			</h:panelGrid>
 		</h:form>
 	</ui:define>

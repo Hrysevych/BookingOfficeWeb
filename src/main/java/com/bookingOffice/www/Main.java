@@ -5,7 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.bookingOffice.www.services.AccountantService;
 import com.bookingOffice.www.services.AdministratorService;
-import com.bookingOffice.www.services.AnalyticService;
+import com.bookingOffice.www.services.AnalystService;
 import com.bookingOffice.www.services.CustomerService;
 import com.bookingOffice.www.services.SecurityService;
 
@@ -23,7 +23,7 @@ public class Main {
 		AdministratorService administratorService = (AdministratorService) context
 				.getBean("administratorServiceImpl");
 
-		AnalyticService analyticService = (AnalyticService) context
+		AnalystService analyticService = (AnalystService) context
 				.getBean("analyticServiceImpl");
 
 		CustomerService customerService = (CustomerService) context

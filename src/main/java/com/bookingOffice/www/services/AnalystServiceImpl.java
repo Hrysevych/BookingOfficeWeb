@@ -15,7 +15,7 @@ import com.bookingOffice.www.util.SellsReport;
 
 
 @Named
-public class AnalyticServiceImpl implements AnalyticService {
+public class AnalystServiceImpl implements AnalystService {
 	@Inject
 	OrderingDAO orderingDAO;
 	@Inject

@@ -21,7 +21,7 @@ public class CustomerBean {
 	private Person customer;
 	private List<Flight> flights = null;
 	private Flight flight = null;
-	private List<CartTickets> tickets = new ArrayList<>();
+	private List<CartTickets> cart = new ArrayList<>();
 	private Date arrivalTime = new Date();
 	@Inject
 	private CustomerService customerService;
@@ -29,7 +29,7 @@ public class CustomerBean {
 	public String getFlightsFiltered() {
 		flight.setArrivalTime(this.arrivalTime);
 		flights = customerService.getFlightsFiltered(flight);
-		return "CustomerResult";
+		return "Customer";
 	}
 
 	public CustomerBean() {
@@ -43,22 +43,22 @@ public class CustomerBean {
 
 	public String addTicketToCart(Flight flight) {
 		CartTickets ticket = new CartTickets(flight);
-		tickets.add(ticket);
-		return "CustomerResult";
+		cart.add(ticket);
+		return "Customer";
 	}
 	
 	public String removeTicket(CartTickets ticket) {
-		tickets.remove(ticket);
-		return "CustomerCart";
+		cart.remove(ticket);
+		return "Cart";
 	}
 	
 	public String submitCart() {
 		ArrayList<Ticket> pureTickets = new ArrayList<Ticket>();
-		for (CartTickets cartTickets : tickets) {
+		for (CartTickets cartTickets : cart) {
 			pureTickets.add(new Ticket(cartTickets));
 		}
 		customerService.submitCart(pureTickets, customer);
-		return "CustomerResult";
+		return "Customer";
 	}
 	
 
@@ -108,20 +108,6 @@ public class CustomerBean {
 	}
 
 	/**
-	 * @return the tickets
-	 */
-	public List<CartTickets> getTickets() {
-		return tickets;
-	}
-
-	/**
-	 * @param tickets the tickets to set
-	 */
-	public void setTickets(List<CartTickets> tickets) {
-		this.tickets = tickets;
-	}
-
-	/**
 	 * @return the customer
 	 */
 	public Person getCustomer() {
@@ -133,6 +119,20 @@ public class CustomerBean {
 	 */
 	public void setCustomer(Person customer) {
 		this.customer = customer;
+	}
+
+	/**
+	 * @return the cart
+	 */
+	public List<CartTickets> getCart() {
+		return cart;
+	}
+
+	/**
+	 * @param cart the cart to set
+	 */
+	public void setCart(List<CartTickets> cart) {
+		this.cart = cart;
 	}
 
 
