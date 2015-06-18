@@ -81,7 +81,7 @@ public class FlightDAOImpl implements FlightDAO {
 	}
 
 	public List<Flight> getFlights() {
-		TypedQuery<Flight> query = em.createQuery("SELECT f FROM Flight f",
+		TypedQuery<Flight> query = em.createQuery("SELECT f FROM Flight f where f.deleted != 1",
 				Flight.class);
 		return query.getResultList();
 	}

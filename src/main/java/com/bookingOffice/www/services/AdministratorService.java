@@ -19,4 +19,6 @@ public interface AdministratorService {
 	public void subtractTickets(int id, int quantity);
 	
 	public void releaseUnpaidTickets();
+	
+	public void deleteFlight(int id);
 }

@@ -71,4 +71,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 			orderingDAO.deleteOrdering(orderingId);
 		}
 	}
+
+	public void deleteFlight(int id) {
+		flightDAO.deleteFlight(id);
+	}
 }

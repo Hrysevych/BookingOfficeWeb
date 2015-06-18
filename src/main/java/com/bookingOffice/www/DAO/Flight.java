@@ -212,7 +212,11 @@ public class Flight {
 	}
 
 	public int getTicketsAvailable() {
-		return ticketsTotal - (ticketsBooked + ticketsSold);
+		return ticketsTotal - (getTicketsConstrained());
+	}
+	
+	public int getTicketsConstrained() {
+		return ticketsBooked + ticketsSold;
 	}
 
 	public String toString() {

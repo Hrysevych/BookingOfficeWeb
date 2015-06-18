@@ -20,8 +20,8 @@ import com.bookingOffice.www.util.CartTickets;
 public class CustomerBean {
 	private Person customer;
 	private List<Flight> flights = null;
-	private List<CartTickets> tickets = new ArrayList<>();
 	private Flight flight = null;
+	private List<CartTickets> tickets = new ArrayList<>();
 	private Date arrivalTime = new Date();
 	@Inject
 	private CustomerService customerService;

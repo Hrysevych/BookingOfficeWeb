@@ -8,7 +8,7 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Customer's page</h2>
-    	<h:form>
+		<h:form>
 			<h:panelGrid columns="3">
 				<h:outputText value="Departure:"></h:outputText>
 				<h:inputText id="departure" value="#{customerBean.flight.departure}"
@@ -23,9 +23,8 @@
 				<h:message for="arrival" style="color:red" />
 
 				<h:outputText value="Arrival Time:"></h:outputText>
-				<h:inputText id="arrivalTime"
-					value="#{customerBean.arrivalTime}" required="false"
-					validatorMessage="#{msgs.fieldRequired}"
+				<h:inputText id="arrivalTime" value="#{customerBean.arrivalTime}"
+					required="false" validatorMessage="#{msgs.fieldRequired}"
 					requiredMessage="#{msgs.fieldRequired}">
 					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 				</h:inputText>
@@ -40,10 +39,6 @@
 				<h:dataTable value="#{customerBean.flights}" var="flight"
 					styleClass="Table" headerClass="TableHeader"
 					rowClasses="TableOddRow, TableEvenRow">
-					<h:column>
-						<f:facet name="header">Id</f:facet> 
-					#{flight.id} 
-			</h:column>
 					<h:column>
 						<f:facet name="header">Departure</f:facet> 
 				#{flight.departure} 
@@ -60,10 +55,15 @@
 						<f:facet name="header">Arrival Time</f:facet> 
 				#{flight.arrivalTime} 
 			</h:column>
-			<h:column>
-				<h:commandButton value="Add to cart" action="#{customerBean.addTicketToCart(flight)}">
-				</h:commandButton>
+					<h:column>
+						<f:facet name="header">Ticket price</f:facet> 
+				#{flight.ticketPrice} 
 			</h:column>
+					<h:column>
+						<h:commandButton value="Add to cart"
+							action="#{customerBean.addTicketToCart(flight)}">
+						</h:commandButton>
+					</h:column>
 				</h:dataTable>
 			</h:panelGrid>
 			<h:link value="CustomerCart" outcome="CustomerCart"></h:link>
