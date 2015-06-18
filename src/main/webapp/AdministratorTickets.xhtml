@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/templates/administratorTemplate.xhtml">
+	<ui:define name="content">
+		<h2>Administrator's page</h2>
+		#{administratorBean.refreshFlights()}
+		<h:form>
+			<h:panelGrid columns="1">
+				<h:dataTable value="#{administratorBean.flights}" var="flight"
+					styleClass="Table" headerClass="TableHeader"
+					rowClasses="TableOddRow, TableEvenRow">
+					<h:column>
+						<f:facet name="header">Id</f:facet> 
+					#{flight.id} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Departure</f:facet> 
+				#{flight.departure} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Departure Time</f:facet> 
+				#{flight.departureTime} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Arrival</f:facet> 
+				#{flight.arrival} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Arrival Time</f:facet> 
+				#{flight.arrivalTime} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Ticket price</f:facet> 
+				#{flight.ticketPrice} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Tickets total</f:facet> 
+				#{flight.ticketsTotal} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Tickets booked</f:facet> 
+				#{flight.ticketsBooked} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Tickets sold</f:facet> 
+				#{flight.ticketsSold} 
+			</h:column>
+					<h:column>
+						<h:commandButton value="edit flight"
+							action="#{administratorBean.editFlight(flight.id)}">
+						</h:commandButton>
+					</h:column>
+				</h:dataTable>
+			</h:panelGrid>
+			<h:commandButton value="add flight"
+							action="#{administratorBean.editFlight(0)}">
+						</h:commandButton>
+		</h:form>
+	
+	</ui:define>
+</ui:composition>
+</html>

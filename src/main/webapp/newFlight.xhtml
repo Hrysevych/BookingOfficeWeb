@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h2>Create or edit flight</h2>
+		<h:link value="Return to flights list" outcome="Administrator"></h:link>
+		<h:form>
+			<h:panelGrid columns="3">
+				<h:outputText value="Departure:"></h:outputText>
+				<h:inputText id="departure"
+					value="#{administratorBean.flight.departure}" required="true"
+					requiredMessage="#{msgs.fieldRequired}">
+				</h:inputText>
+				<h:message for="departure" style="color:red" />
+
+				<h:outputText value="Departure Time:"></h:outputText>
+				<h:inputText id="departureTime"
+					value="#{administratorBean.departureTime}" required="false"
+					validatorMessage="#{msgs.fieldRequired}"
+					requiredMessage="#{msgs.fieldRequired}">
+					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+				</h:inputText>
+				<h:message for="departureTime" style="color:red" />
+
+				<h:outputText value="Arrival:"></h:outputText>
+				<h:inputText id="arrival"
+					value="#{administratorBean.flight.arrival}" required="true"
+					requiredMessage="#{msgs.fieldRequired}">
+				</h:inputText>
+				<h:message for="arrival" style="color:red" />
+
+				<h:outputText value="Arrival Time:"></h:outputText>
+				<h:inputText id="arrivalTime"
+					value="#{administratorBean.arrivalTime}" required="false"
+					validatorMessage="#{msgs.fieldRequired}"
+					requiredMessage="#{msgs.fieldRequired}">
+					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+				</h:inputText>
+				<h:message for="arrivalTime" style="color:red" />
+
+				<h:outputText value="Quantity of tickets total:"></h:outputText>
+				<h:inputText id="ticketsTotal"
+					value="#{administratorBean.flight.ticketsTotal}" required="false"
+					validatorMessage="#{msgs.ticketsQuantity}"
+					requiredMessage="#{msgs.fieldRequired}">
+					<f:validateLongRange
+						minimum="#{administratorBean.flight.getTicketsConstrained()}"
+						maximum="500">
+					</f:validateLongRange>
+				</h:inputText>
+				<h:message for="ticketsTotal" style="color:red" />
+
+				<h:outputText value="Price:"></h:outputText>
+				<h:inputText id="price"
+					value="#{administratorBean.flight.ticketPrice}" required="true"
+					requiredMessage="#{msgs.fieldRequired}"
+					validatorMessage="#{msgs.positivePrice}">
+					<f:validateDoubleRange minimum="0"></f:validateDoubleRange>
+				</h:inputText>
+				<h:message for="price" style="color:red" />
+
+
+				<h:outputText value="Quantity of constrained tickets:"></h:outputText>
+				<h:outputText
+					value="#{administratorBean.flight.getTicketsConstrained()}"></h:outputText>
+				<h:outputText></h:outputText>
+
+			</h:panelGrid>
+			<h:commandButton value="Submit"
+				action="#{administratorBean.addFlight}"></h:commandButton>
+				<h:outputText value="	"></h:outputText>
+			<h:commandButton value="Cancel"
+				action="Administrator"></h:commandButton>
+				<h:outputText value="	"></h:outputText>
+			<h:commandButton value="DELETE"
+				action="#{administratorBean.deleteFlight()}"
+				style="background-color:red">
+			</h:commandButton>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
