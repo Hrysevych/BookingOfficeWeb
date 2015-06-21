@@ -8,10 +8,11 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Administrator's page</h2>
+		#{administratorBean.refreshFlights()}
 		<h:commandButton value="Release unpaid tickets"
 							action="#{administratorBean.releaseUnpaidTickets()}">
 						</h:commandButton>
-		#{administratorBean.refreshFlights()}
+		<h:outputText value="#{administratorBean.releaseMessage}"></h:outputText>
 		<h:form>
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{administratorBean.flights}" var="flight"

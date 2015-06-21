@@ -9,6 +9,8 @@ public interface PersonDAO {
 	public void activate(int id);
 
 	public void deactivate(int id);
+	
+	public void deletePerson(int id);
 
 	public Person getPerson(int id);
 

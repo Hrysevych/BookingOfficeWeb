@@ -3,7 +3,7 @@ package com.bookingOffice.www.services;
 import java.util.List;
 
 import com.bookingOffice.www.DAO.Flight;
-import com.bookingOffice.www.DAO.Ordering;
+import com.bookingOffice.www.DAO.Order;
 
 public interface AdministratorService {
 
@@ -11,12 +11,10 @@ public interface AdministratorService {
 	
 	public List<Flight> getFlights();
 	
-	public List<Ordering> getInvalidOrderings();
+	public List<Order> getInvalidOrderings();
 
 	public void addFlight(Flight flight);
 	
-	public void updateFlight(int id, Flight flight);
-
 	public void addTickets(int id, int quantity);
 
 	public void subtractTickets(int id, int quantity);

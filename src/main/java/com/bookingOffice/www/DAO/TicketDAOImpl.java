@@ -26,14 +26,14 @@ public class TicketDAOImpl implements TicketDAO {
 
 	public List<Ticket> getTicketsByPerson(Person person) {
 		TypedQuery<Ticket> query = em.createQuery(
-				"SELECT t FROM Ticket t WHERE buyerID = :buyer", Ticket.class);
+				"SELECT t FROM Ticket t WHERE t.buyerID = :buyer", Ticket.class);
 		query.setParameter("buyer", person.getId());
 		return query.getResultList();
 	}
 
 	public List<Ticket> getTicketsByOrder(int orderId) {
 		TypedQuery<Ticket> query = em.createQuery(
-				"SELECT t FROM Ticket t WHERE orderId = :order", Ticket.class);
+				"SELECT t FROM Ticket t WHERE t.orderId = :order", Ticket.class);
 		query.setParameter("order", orderId);
 		return query.getResultList();
 	}

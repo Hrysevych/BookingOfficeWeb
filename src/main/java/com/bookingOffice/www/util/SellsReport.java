@@ -6,42 +6,52 @@ public class SellsReport {
 	private Date date;
 	private int ticketsQuantity;
 	private double totalSum;
+
 	/**
 	 * @return the date
 	 */
 	public Date getDate() {
 		return date;
 	}
+
 	/**
-	 * @param date the date to set
+	 * @param date
+	 *            the date to set
 	 */
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	/**
 	 * @return the ticketsQuantity
 	 */
 	public int getTicketsQuantity() {
 		return ticketsQuantity;
 	}
+
 	/**
-	 * @param ticketsQuantity the ticketsQuantity to set
+	 * @param ticketsQuantity
+	 *            the ticketsQuantity to set
 	 */
 	public void setTicketsQuantity(int ticketsQuantity) {
 		this.ticketsQuantity = ticketsQuantity;
 	}
+
 	/**
 	 * @return the totalSum
 	 */
 	public double getTotalSum() {
 		return totalSum;
 	}
+
 	/**
-	 * @param totalSum the totalSum to set
+	 * @param totalSum
+	 *            the totalSum to set
 	 */
 	public void setTotalSum(double totalSum) {
 		this.totalSum = totalSum;
 	}
+
 	/**
 	 * @param ticketsQuantity
 	 * @param totalSum
@@ -51,6 +61,7 @@ public class SellsReport {
 		this.ticketsQuantity = ticketsQuantity;
 		this.totalSum = totalSum;
 	}
+
 	/**
 	 * @param date
 	 * @param ticketsQuantity
@@ -61,6 +72,9 @@ public class SellsReport {
 		this.date = (Date) date;
 		this.ticketsQuantity = ticketsQuantity.intValue();
 		this.totalSum = totalSum;
+	}
+
+	public SellsReport() {
 	}
 
 	@Override

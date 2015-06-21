@@ -13,14 +13,14 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int orderId;
-	private int flightID;
+	private int flightId;
 	private String firstName;
 	private String lastName;
 	private String passport;
 
 
 	public Ticket(CartTickets cartContent) {
-		this.flightID = cartContent.getFlightId();
+		this.flightId = cartContent.getFlightId();
 		this.firstName = cartContent.getFirstName();
 		this.lastName = cartContent.getLastName();
 		this.passport = cartContent.getPassport();
@@ -32,16 +32,16 @@ public class Ticket {
 	/**
 	 * @return the flightID
 	 */
-	public int getFlightID() {
-		return flightID;
+	public int getFlightId() {
+		return flightId;
 	}
 
 	/**
 	 * @param flightID
 	 *            the flightID to set
 	 */
-	public void setFlightID(int flightID) {
-		this.flightID = flightID;
+	public void setFlightId(int flightId) {
+		this.flightId = flightId;
 	}
 
 	/**
@@ -117,8 +117,8 @@ public class Ticket {
 	}
 
 	public String toString() {
-		return "Ticket [id=" + id + ", orderId=" + orderId + ", flightID="
-				+ flightID + ", "
+		return "Ticket [id=" + id + ", orderId=" + orderId + ", flightId="
+				+ flightId + ", "
 				+ (firstName != null ? "firstName=" + firstName + ", " : "")
 				+ (lastName != null ? "lastName=" + lastName + ", " : "")
 				+ (passport != null ? "passport=" + passport : "") + "]";

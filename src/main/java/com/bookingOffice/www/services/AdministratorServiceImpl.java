@@ -7,8 +7,8 @@ import javax.inject.Named;
 
 import com.bookingOffice.www.DAO.Flight;
 import com.bookingOffice.www.DAO.FlightDAO;
-import com.bookingOffice.www.DAO.Ordering;
-import com.bookingOffice.www.DAO.OrderingDAO;
+import com.bookingOffice.www.DAO.Order;
+import com.bookingOffice.www.DAO.OrderDAO;
 import com.bookingOffice.www.DAO.Ticket;
 import com.bookingOffice.www.DAO.TicketDAO;
 import com.bookingOffice.www.util.FlightError;
@@ -22,7 +22,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 	@Inject
 	private FlightDAO flightDAO;
 	@Inject
-	private OrderingDAO orderingDAO;
+	private OrderDAO orderingDAO;
 	@Inject
 	private TicketDAO ticketDAO;
 
@@ -49,26 +49,22 @@ public class AdministratorServiceImpl implements AdministratorService {
 		return flightDAO.getFlight(id);
 	}
 
-	public void updateFlight(int id, Flight flight) {
-		flightDAO.updateFlight(id, flight);
-	}
-
 	public List<Flight> getFlights() {
 		return flightDAO.getFlights();
 	}
 
 	public void releaseUnpaidTickets() {
-		List<Ordering> orderings = orderingDAO.getInvalidOrderings();
-		for (Ordering ordering : orderings) {
-			int orderingId = ordering.getId();
-			List<Ticket> tickets = ticketDAO.getTicketsByOrder(orderingId);
+		List<Order> orderings = orderingDAO.getInvalidOrderings();
+		for (Order ordering : orderings) {
+			int orderId = ordering.getId();
+			List<Ticket> tickets = ticketDAO.getTicketsByOrder(orderId);
 			for (Ticket ticket : tickets) {
-				int flightId = ticket.getFlightID();
+				int flightId = ticket.getFlightId();
 				Flight flight = flightDAO.getFlight(flightId);
 				flight.setTicketsBooked(flight.getTicketsBooked() - 1);
-				flightDAO.updateFlight(flightId, flight);
+				flightDAO.addFlight(flight);
 			}
-			orderingDAO.deleteOrdering(orderingId);
+			orderingDAO.deleteOrdering(orderId);
 		}
 	}
 
@@ -77,7 +73,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 	}
 
 	@Override
-	public List<Ordering> getInvalidOrderings() {
+	public List<Order> getInvalidOrderings() {
 		return orderingDAO.getInvalidOrderings();
 	}
 }

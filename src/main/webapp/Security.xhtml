@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h2>Security's page</h2>
+		#{securityBean.refreshPersons()}
+
+		<h:form>
+			<h:panelGrid columns="1">
+				<h:dataTable value="#{securityBean.persons}" var="person"
+					styleClass="Table" headerClass="TableHeader"
+					rowClasses="TableOddRow, TableEvenRow">
+					<h:column>
+						<f:facet name="header">Id</f:facet> 
+					#{person.id}
+			</h:column>
+					<h:column>
+						<f:facet name="header">e-mail</f:facet> 
+				#{person.email} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">First Name</f:facet> 
+				#{person.firstName} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">LastName</f:facet> 
+				#{person.lastName} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Role</f:facet> 
+				#{person.role} 
+			</h:column>
+					<h:column>
+						<f:facet name="header">Active</f:facet> 
+				#{person.active} 
+			</h:column>
+			<h:column>
+						<h:commandButton value="(de)activate"
+							action="#{securityBean.changePersonActiveState(person.id)}"
+							rendered="#{(person.role.ordinal() != 4)}">
+						</h:commandButton>
+					</h:column>
+					<h:column>
+						<h:commandButton value="edit person"
+							action="#{securityBean.editPerson(person.id)}"
+							rendered="#{(person.role.ordinal() != 4)}">
+						</h:commandButton>
+					</h:column>
+					
+				</h:dataTable>
+			</h:panelGrid>
+			<h:commandButton value="add person"
+				action="#{securityBean.editPerson(0)}">
+			</h:commandButton>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

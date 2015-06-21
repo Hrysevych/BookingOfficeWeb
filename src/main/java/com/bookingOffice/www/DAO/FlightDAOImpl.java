@@ -2,7 +2,6 @@ package com.bookingOffice.www.DAO;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,8 +10,6 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.bookingOffice.www.util.FlightError;
 
 @Repository
 public class FlightDAOImpl implements FlightDAO {
@@ -69,30 +66,9 @@ public class FlightDAOImpl implements FlightDAO {
 		return em.find(Flight.class, id);
 	}
 
-	@Transactional
-	public void updateFlight(int id, Flight flight) {
-		Flight flightToUpdate = em.find(Flight.class, id);
-		if (flightToUpdate != null) {
-			flightToUpdate = flight;
-		} else {
-			throw new FlightError("Can't update missing flight");
-		}
-	}
-
 	public List<Flight> getFlights() {
 		TypedQuery<Flight> query = em.createQuery("SELECT f FROM Flight f where f.deleted != 1",
 				Flight.class);
-		return query.getResultList();
-	}
-
-	public List<Flight> getFlightsForCart(List<Ticket> tickets) {
-		ArrayList<Integer> flightIds = new ArrayList<>();
-		for (Ticket ticket : tickets) {
-			flightIds.add(ticket.getFlightID());
-		}
-		String sql = "SELECT f FROM Flight f WHERE f.id in :flightIds";
-		TypedQuery<Flight> query = em.createQuery(sql, Flight.class);
-		query.setParameter("flightIds", flightIds);
 		return query.getResultList();
 	}
 

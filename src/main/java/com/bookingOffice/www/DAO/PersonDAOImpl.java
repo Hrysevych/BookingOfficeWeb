@@ -15,23 +15,27 @@ public class PersonDAOImpl implements PersonDAO {
 	EntityManager em;
 
 	@Transactional
-	public void create(Person p) {
-		em.persist(p);
+	public void create(Person person) {
+		if (person.getId() == 0) {
+			em.persist(person);	
+		} else {
+			em.merge(person);
+		}
 	}
 
 	@Transactional
 	public void activate(int id) {
-		Person p = em.find(Person.class, id);
-		if (p != null) {
-			p.setActive(1);
+		Person person = em.find(Person.class, id);
+		if (person != null) {
+			person.setActive(1);
 		}
 	}
 
 	@Transactional
 	public void deactivate(int id) {
-		Person p = em.find(Person.class, id);
-		if (p != null) {
-			p.setActive(0);
+		Person person = em.find(Person.class, id);
+		if (person != null) {
+			person.setActive(0);
 		}
 	}
 
@@ -43,6 +47,14 @@ public class PersonDAOImpl implements PersonDAO {
 		TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p",
 				Person.class);
 		return query.getResultList();
+	}
+
+	@Transactional
+	public void deletePerson(int id) {
+		Person person = em.find(Person.class, id);
+		if (person != null) {
+			em.remove(person);
+		}
 	}
 
 }

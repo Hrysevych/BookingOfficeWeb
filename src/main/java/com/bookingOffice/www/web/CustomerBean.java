@@ -22,6 +22,7 @@ public class CustomerBean {
 	private List<Flight> flights = null;
 	private Flight flight = null;
 	private List<CartTickets> cart = new ArrayList<>();
+	private String allDataMessage = "";
 	private Date arrivalTime = new Date();
 	@Inject
 	private CustomerService customerService;
@@ -32,10 +33,26 @@ public class CustomerBean {
 		return "Customer";
 	}
 
+	public boolean isAllDataSet() {
+		boolean flag = true;
+		for (CartTickets ticket : cart) {
+			if ((ticket.getFirstName() == null || ticket.getFirstName()
+					.isEmpty())
+					|| (ticket.getLastName() == null || ticket.getLastName()
+							.isEmpty())
+					|| (ticket.getPassport() == null || ticket.getPassport()
+							.isEmpty()))
+				flag = false;
+			if (!flag)
+				return flag;
+		}
+		return flag;
+	}
+
 	public CustomerBean() {
 		customer = new Person();
-		//TODO Get REAL person
-		customer.setId(1);
+		// TODO Get REAL person
+		customer.setId(2);
 		flight = new Flight();
 		flight.setDeparture("KBP");
 		flight.setArrival("JFK");
@@ -46,21 +63,26 @@ public class CustomerBean {
 		cart.add(ticket);
 		return "Customer";
 	}
-	
+
 	public String removeTicket(CartTickets ticket) {
 		cart.remove(ticket);
 		return "Cart";
 	}
-	
+
 	public String submitCart() {
+		if (!isAllDataSet()) {
+			allDataMessage = "You need to fill all empty fields of all tickets in cart!";
+			return "Cart"; 
+		}
+		allDataMessage = "";
 		ArrayList<Ticket> pureTickets = new ArrayList<Ticket>();
 		for (CartTickets cartTickets : cart) {
 			pureTickets.add(new Ticket(cartTickets));
 		}
 		customerService.submitCart(pureTickets, customer);
+		cart.clear();
 		return "Customer";
 	}
-	
 
 	/**
 	 * @return the flights
@@ -115,7 +137,8 @@ public class CustomerBean {
 	}
 
 	/**
-	 * @param customer the customer to set
+	 * @param customer
+	 *            the customer to set
 	 */
 	public void setCustomer(Person customer) {
 		this.customer = customer;
@@ -129,11 +152,25 @@ public class CustomerBean {
 	}
 
 	/**
-	 * @param cart the cart to set
+	 * @param cart
+	 *            the cart to set
 	 */
 	public void setCart(List<CartTickets> cart) {
 		this.cart = cart;
 	}
 
+	/**
+	 * @return the allDataMessage
+	 */
+	public String getAllDataMessage() {
+		return allDataMessage;
+	}
+
+	/**
+	 * @param allDataMessage the allDataMessage to set
+	 */
+	public void setAllDataMessage(String allDataMessage) {
+		this.allDataMessage = allDataMessage;
+	}
 
 }

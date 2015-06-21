@@ -13,7 +13,7 @@
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{customerBean.cart}" var="ticket"
 					styleClass="Table" headerClass="TableHeader"
-					rowClasses="TableOddRow, TableEvenRow">
+					rowClasses="TableOddRow, TableEvenRow" rendered="#{not empty customerBean.cart}">
 					<h:column>
 						<f:facet name="header">Departure</f:facet> 
 				#{ticket.departure}
@@ -36,20 +36,17 @@
 			</h:column>
 					<h:column>
 						<f:facet name="header">First Name</f:facet>
-						<h:inputText id="firstName" value="#{ticket.firstName}"
-							required="true" requiredMessage="#{msgs.fieldRequired}">
+						<h:inputText id="firstName" value="#{ticket.firstName}">
 						</h:inputText>
 					</h:column>
 					<h:column>
 						<f:facet name="header">Last Name</f:facet>
-						<h:inputText id="lastName" value="#{ticket.lastName}"
-							required="true" requiredMessage="#{msgs.fieldRequired}">
+						<h:inputText id="lastName" value="#{ticket.lastName}">
 						</h:inputText>
 					</h:column>
 					<h:column>
 						<f:facet name="header">Passport</f:facet>
-						<h:inputText id="passport" value="#{ticket.passport}"
-							required="true" requiredMessage="#{msgs.fieldRequired}">
+						<h:inputText id="passport" value="#{ticket.passport}">
 						</h:inputText>
 					</h:column>
 					<h:column>
@@ -59,7 +56,8 @@
 						</h:commandButton>
 					</h:column>
 				</h:dataTable>
-				<h:commandButton value="Submit" action="#{customerBean.submitCart}"></h:commandButton>
+				<h:outputText value="#{customerBean.allDataMessage}" style="color:red"></h:outputText>
+				<h:commandButton value="Submit" action="#{customerBean.submitCart}" rendered="#{not empty customerBean.cart}"></h:commandButton>
 				
 			</h:panelGrid>
 		</h:form>

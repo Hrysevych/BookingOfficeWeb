@@ -79,6 +79,7 @@ public class Person {
 	public void setRole(Roles role) {
 		this.role = role.ordinal();
 	}
+	
 
 	/**
 	 * @return the active

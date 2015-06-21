@@ -1,23 +1,21 @@
 package com.bookingOffice.www.services;
 
 import java.sql.Date;
-import java.util.Comparator;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.bookingOffice.www.DAO.FlightDAO;
-import com.bookingOffice.www.DAO.Ordering;
-import com.bookingOffice.www.DAO.OrderingDAO;
+import com.bookingOffice.www.DAO.OrderDAO;
 import com.bookingOffice.www.DAO.TicketDAO;
 import com.bookingOffice.www.util.SellsReport;
-
 
 @Named
 public class AnalystServiceImpl implements AnalystService {
 	@Inject
-	OrderingDAO orderingDAO;
+	OrderDAO orderingDAO;
 	@Inject
 	FlightDAO flightDAO;
 	@Inject
@@ -31,14 +29,12 @@ public class AnalystServiceImpl implements AnalystService {
 		return orderingDAO.getDailyReports(from, until);
 	}
 
-	public static class CompareByDate implements Comparator<Ordering> {
-
-		public int compare(Ordering o1, Ordering o2) {
-			if (o1.getValidDate().before(o2.getValidDate()))
-				return -1;
-			else
-				return 1;
-		}
-
+	public SellsReport getTotalReport(LocalDate from, LocalDate until) {
+		return getTotalReport(Date.valueOf(from), Date.valueOf(until));
 	}
+
+	public List<SellsReport> getDailyReports(LocalDate from, LocalDate until) {
+		return getDailyReports(Date.valueOf(from), Date.valueOf(until));
+	}
+
 }

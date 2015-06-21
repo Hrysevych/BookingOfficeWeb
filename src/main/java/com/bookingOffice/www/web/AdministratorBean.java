@@ -1,6 +1,5 @@
 package com.bookingOffice.www.web;
 
-import java.time.Instant;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.DAO.Flight;
@@ -25,6 +23,8 @@ public class AdministratorBean {
 
 	private Date departureTime = new Date();
 	private Date arrivalTime = new Date();
+	
+	private String releaseMessage = "";
 
 	public void refreshFlights() {
 		flights = administratorService.getFlights();
@@ -32,10 +32,12 @@ public class AdministratorBean {
 
 	public String releaseUnpaidTickets() {
 		administratorService.releaseUnpaidTickets();
+		releaseMessage = "Tickets been released successfully";
 		return "Administrator";
 	}
 
 	public String editFlight(String stringId) {
+		releaseMessage = "";
 		int id = Integer.parseInt(stringId);
 		if (id != 0) {
 			flight = administratorService.getFlight(id);
@@ -44,17 +46,6 @@ public class AdministratorBean {
 		}
 		return "newFlight";
 	}
-	
-	public String cancelEditing(){
-		flight.setArrival("KBP");
-		flight.setArrivalTime(Timestamp.from(Instant.now()));
-		flight.setDeparture("JFK");
-		flight.setDepartureTime(Timestamp.from(Instant.now()));
-		flight.setTicketPrice(0.0);
-		flight.setTicketsTotal(0);
-		return "Administrator";
-	}
-	
 
 	public String addFlight() {
 		flight.setDepartureTime(Timestamp.from(departureTime.toInstant()));
@@ -160,6 +151,20 @@ public class AdministratorBean {
 	 */
 	public void setArrivalTime(Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
+	}
+
+	/**
+	 * @return the releaseMessage
+	 */
+	public String getReleaseMessage() {
+		return releaseMessage;
+	}
+
+	/**
+	 * @param releaseMessage the releaseMessage to set
+	 */
+	public void setReleaseMessage(String releaseMessage) {
+		this.releaseMessage = releaseMessage;
 	}
 
 }

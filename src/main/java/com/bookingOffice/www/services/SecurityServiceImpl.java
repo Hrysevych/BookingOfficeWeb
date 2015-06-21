@@ -24,22 +24,23 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	public void activatePerson(int id) {
-		Person person = personDAO.getPerson(id);
-		if (person != null) {
-			personDAO.activate(id);
-		}
+		personDAO.activate(id);
 	}
 
 	public void deactivatePerson(int id) {
-		Person person = personDAO.getPerson(id);
-		if ((person != null) && (!person.getRole().equals(Roles.SECURITY))) {
-			personDAO.deactivate(id);
-		}
-
+		personDAO.deactivate(id);
 	}
 
 	public List<Person> getPersonsList() {
 		return personDAO.getPersonsList();
+	}
+
+	public Person getPerson(int id) {
+		return personDAO.getPerson(id);
+	}
+
+	public void deletePerson(int id) {
+		personDAO.deletePerson(id);
 	}
 
 }

@@ -9,8 +9,8 @@ import javax.inject.Named;
 
 import com.bookingOffice.www.DAO.Flight;
 import com.bookingOffice.www.DAO.FlightDAO;
-import com.bookingOffice.www.DAO.Ordering;
-import com.bookingOffice.www.DAO.OrderingDAO;
+import com.bookingOffice.www.DAO.Order;
+import com.bookingOffice.www.DAO.OrderDAO;
 import com.bookingOffice.www.DAO.Person;
 import com.bookingOffice.www.DAO.Ticket;
 import com.bookingOffice.www.DAO.TicketDAO;
@@ -22,14 +22,14 @@ public class CustomerServiceImpl implements CustomerService {
 	@Inject
 	private TicketDAO ticketDAO;
 	@Inject
-	private OrderingDAO orderingDAO;
+	private OrderDAO orderingDAO;
 
 	public List<Flight> getFlightsFiltered(Flight flight) {
 		return flightDAO.getFlightsFiltered(flight);
 	}
 
 	public void submitCart(List<Ticket> tickets, Person person) {
-		Ordering ordering = new Ordering();
+		Order ordering = new Order();
 		ordering.setBuyerId(person.getId());
 		ordering.setPayed(0);
 		ordering.setValidDate(Date.valueOf(LocalDate.now().plusDays(3)));

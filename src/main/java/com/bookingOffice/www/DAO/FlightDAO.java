@@ -7,8 +7,6 @@ public interface FlightDAO {
 
 	public void addFlight(Flight flight);
 
-	public void updateFlight(int id, Flight flight);
-
 	public void deleteFlight(int id);
 
 	public void editTicketsNumber(int id, int quantity);
@@ -17,5 +15,4 @@ public interface FlightDAO {
 	
 	public List<Flight> getFlights();
 
-	public List<Flight> getFlightsForCart(List<Ticket> cart);
 }
