@@ -1,6 +1,6 @@
 package com.bookingOffice.www.DAO;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -82,10 +82,11 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	public SellsReport getTotalReport(Date from, Date until) {
+		
 		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
 				+ " (max(o.validDate), count(f.ticketPrice), sum(f.ticketPrice))"
 				+ "from Ordering o, Flight f, Ticket t "
-				+ "WHERE (o.validDate between :from and :until) and t.orderId = o.id and t.flightID = f.id";
+				+ "WHERE (o.validDate between :from and :until) and t.orderId = o.id and t.flightId = f.id";
 		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
 		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
 		query.setParameter("until", ValidityDurationUtil.toValidDate(until));
@@ -97,7 +98,7 @@ public class OrderDAOImpl implements OrderDAO {
 				+ " (o.validDate, count(f.ticketPrice), sum(f.ticketPrice)) " 
 				+ "from Ordering o, Flight f, Ticket t "
 				+ "WHERE (o.validDate between :from and :until) "
-				+ "and (t.orderId = o.id) and (t.flightID = f.id) "
+				+ "and (t.orderId = o.id) and (t.flightId = f.id) "
 				+ "group by o.validDate";
 		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
 		query.setParameter("from", ValidityDurationUtil.toValidDate(from));

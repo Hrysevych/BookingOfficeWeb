@@ -1,7 +1,6 @@
 package com.bookingOffice.www.services;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,14 +26,6 @@ public class AnalystServiceImpl implements AnalystService {
 
 	public List<SellsReport> getDailyReports(Date from, Date until) {
 		return orderingDAO.getDailyReports(from, until);
-	}
-
-	public SellsReport getTotalReport(LocalDate from, LocalDate until) {
-		return getTotalReport(Date.valueOf(from), Date.valueOf(until));
-	}
-
-	public List<SellsReport> getDailyReports(LocalDate from, LocalDate until) {
-		return getDailyReports(Date.valueOf(from), Date.valueOf(until));
 	}
 
 }

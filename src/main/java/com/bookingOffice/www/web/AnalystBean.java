@@ -1,11 +1,7 @@
 package com.bookingOffice.www.web;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Year;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,89 +16,96 @@ import com.bookingOffice.www.util.SellsReport;
 @Named
 @Scope("session")
 public class AnalystBean {
+
+	private Date from = java.sql.Date.valueOf(LocalDate.now().minusYears(1));
+	private Date until = java.sql.Date.valueOf(LocalDate.now().plusYears(1));
+
+	private List<SellsReport> reports = null;
+	private SellsReport totalReport = null;
+	private SellsReport report = null;
 	@Inject
 	private AnalystService analystService;
 
-	private List<SellsReport> sellsReports = null;
-	private SellsReport sellsReport = null;
-	
-	private LocalDate from = LocalDate.now();
-	private LocalDate until = LocalDate.MAX;
-	
-	
-	public void refreshReports() {
-		sellsReport = analystService.getTotalReport(from, until);
-		sellsReports = analystService.getDailyReports(from, until);
+	public String refreshReports() {
+		totalReport = analystService.getTotalReport(from, until);
+		reports = analystService.getDailyReports(from, until);
+		return "Analyst";
 	}
 
-	
-	
 	public AnalystBean() {
-		sellsReport = new SellsReport();
+		report = new SellsReport();
+		totalReport = new SellsReport();
+		reports = new ArrayList<SellsReport>();
 	}
-
-
-	/**
-	 * @return the sellsReports
-	 */
-	public List<SellsReport> getSellsReports() {
-		return sellsReports;
-	}
-
-
-	/**
-	 * @param sellsReports the sellsReports to set
-	 */
-	public void setSellsReports(List<SellsReport> sellsReports) {
-		this.sellsReports = sellsReports;
-	}
-
-
-	/**
-	 * @return the sellsReport
-	 */
-	public SellsReport getSellsReport() {
-		return sellsReport;
-	}
-
-
-	/**
-	 * @param sellsReport the sellsReport to set
-	 */
-	public void setSellsReport(SellsReport sellsReport) {
-		this.sellsReport = sellsReport;
-	}
-
 
 	/**
 	 * @return the from
 	 */
-	public LocalDate getFrom() {
+	public Date getFrom() {
 		return from;
 	}
-
 
 	/**
 	 * @param from the from to set
 	 */
-	public void setFrom(LocalDate from) {
+	public void setFrom(Date from) {
 		this.from = from;
 	}
-
 
 	/**
 	 * @return the until
 	 */
-	public LocalDate getUntil() {
+	public Date getUntil() {
 		return until;
 	}
-
 
 	/**
 	 * @param until the until to set
 	 */
-	public void setUntil(LocalDate until) {
+	public void setUntil(Date until) {
 		this.until = until;
+	}
+
+	/**
+	 * @return the reports
+	 */
+	public List<SellsReport> getReports() {
+		return reports;
+	}
+
+	/**
+	 * @param reports the reports to set
+	 */
+	public void setReports(List<SellsReport> reports) {
+		this.reports = reports;
+	}
+
+	/**
+	 * @return the totalReport
+	 */
+	public SellsReport getTotalReport() {
+		return totalReport;
+	}
+
+	/**
+	 * @param totalReport the totalReport to set
+	 */
+	public void setTotalReport(SellsReport totalReport) {
+		this.totalReport = totalReport;
+	}
+
+	/**
+	 * @return the report
+	 */
+	public SellsReport getReport() {
+		return report;
+	}
+
+	/**
+	 * @param report the report to set
+	 */
+	public void setReport(SellsReport report) {
+		this.report = report;
 	}
 
 }
