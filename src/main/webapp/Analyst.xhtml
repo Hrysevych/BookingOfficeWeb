@@ -22,8 +22,13 @@
 				<h:commandButton type="submit" value="submit"
 					action="#{analystBean.refreshReports()}"></h:commandButton>
 			</h:panelGrid>
-		</h:form>
-		<h:form>
+			<h:panelGrid columns="2">
+			<h:outputText value="Total tickets sold - "/>
+			<h:outputText value="#{analystBean.totalReport.ticketsQuantity}"/>
+			
+			<h:outputText value="For total sum - "/>
+			<h:outputText value="#{analystBean.totalReport.totalSum}"/>
+			</h:panelGrid>
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{analystBean.reports}" var="report"
 					styleClass="Table" headerClass="TableHeader"
@@ -44,8 +49,6 @@
 				</h:dataTable>
 			</h:panelGrid>
 		</h:form>
-
-
 	</ui:define>
 </ui:composition>
 </html>

@@ -1,12 +1,9 @@
 package com.bookingOffice.www;
 
 
-import java.util.List;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.bookingOffice.www.DAO.Flight;
 import com.bookingOffice.www.services.AccountantService;
 import com.bookingOffice.www.services.AdministratorService;
 import com.bookingOffice.www.services.AnalystService;
@@ -27,7 +24,7 @@ public class Main {
 		AdministratorService administratorService = (AdministratorService) context
 				.getBean("administratorServiceImpl");
 
-		AnalystService analyticService = (AnalystService) context
+		AnalystService analystService = (AnalystService) context
 				.getBean("analystServiceImpl");
 
 		CustomerService customerService = (CustomerService) context
@@ -39,10 +36,6 @@ public class Main {
 		String password = "password";
 		System.out.println(password.hashCode());
 
-		List<Flight> flights = administratorService.getFlights();
-		for (Flight flight : flights) {
-			System.out.println(flight);
-		}
 		
 	}
 }

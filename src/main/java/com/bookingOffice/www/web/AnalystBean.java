@@ -1,7 +1,6 @@
 package com.bookingOffice.www.web;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,15 +15,15 @@ import com.bookingOffice.www.util.SellsReport;
 @Named
 @Scope("session")
 public class AnalystBean {
+	@Inject
+	private AnalystService analystService;
 
-	private Date from = java.sql.Date.valueOf(LocalDate.now().minusYears(1));
-	private Date until = java.sql.Date.valueOf(LocalDate.now().plusYears(1));
+	private Date from;
+	private Date until;
 
 	private List<SellsReport> reports = null;
 	private SellsReport totalReport = null;
 	private SellsReport report = null;
-	@Inject
-	private AnalystService analystService;
 
 	public String refreshReports() {
 		totalReport = analystService.getTotalReport(from, until);
@@ -33,9 +32,13 @@ public class AnalystBean {
 	}
 
 	public AnalystBean() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.YEAR, -1);
+		from = calendar.getTime();
+		calendar.add(Calendar.YEAR, 2);
+		until = calendar.getTime();
 		report = new SellsReport();
 		totalReport = new SellsReport();
-		reports = new ArrayList<SellsReport>();
 	}
 
 	/**
@@ -46,7 +49,8 @@ public class AnalystBean {
 	}
 
 	/**
-	 * @param from the from to set
+	 * @param from
+	 *            the from to set
 	 */
 	public void setFrom(Date from) {
 		this.from = from;
@@ -60,7 +64,8 @@ public class AnalystBean {
 	}
 
 	/**
-	 * @param until the until to set
+	 * @param until
+	 *            the until to set
 	 */
 	public void setUntil(Date until) {
 		this.until = until;
@@ -74,7 +79,8 @@ public class AnalystBean {
 	}
 
 	/**
-	 * @param reports the reports to set
+	 * @param reports
+	 *            the reports to set
 	 */
 	public void setReports(List<SellsReport> reports) {
 		this.reports = reports;
@@ -88,7 +94,8 @@ public class AnalystBean {
 	}
 
 	/**
-	 * @param totalReport the totalReport to set
+	 * @param totalReport
+	 *            the totalReport to set
 	 */
 	public void setTotalReport(SellsReport totalReport) {
 		this.totalReport = totalReport;
@@ -102,7 +109,8 @@ public class AnalystBean {
 	}
 
 	/**
-	 * @param report the report to set
+	 * @param report
+	 *            the report to set
 	 */
 	public void setReport(SellsReport report) {
 		this.report = report;

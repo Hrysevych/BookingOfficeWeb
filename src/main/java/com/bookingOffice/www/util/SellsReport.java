@@ -1,6 +1,6 @@
 package com.bookingOffice.www.util;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class SellsReport {
 	private Date date;

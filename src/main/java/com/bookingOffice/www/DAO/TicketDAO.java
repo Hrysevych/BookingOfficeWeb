@@ -7,6 +7,8 @@ public interface TicketDAO {
 	public Ticket getTicket(int id);
 
 	public void addTicket(Ticket ticket);
+	
+	public void deleteTicket(int id);
 
 	public List<Ticket> getTicketsByPerson(Person person);
 

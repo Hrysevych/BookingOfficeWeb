@@ -21,19 +21,29 @@ public class TicketDAOImpl implements TicketDAO {
 		} else {
 			em.merge(ticket);
 		}
-		
+
+	}
+
+	@Transactional
+	public void deleteTicket(int id) {
+		Ticket ticket = em.find(Ticket.class, id);
+		if (ticket != null) {
+			em.remove(ticket);
+		}
 	}
 
 	public List<Ticket> getTicketsByPerson(Person person) {
-		TypedQuery<Ticket> query = em.createQuery(
-				"SELECT t FROM Ticket t WHERE t.buyerID = :buyer", Ticket.class);
+		TypedQuery<Ticket> query = em
+				.createQuery("SELECT t FROM Ticket t WHERE t.buyerID = :buyer",
+						Ticket.class);
 		query.setParameter("buyer", person.getId());
 		return query.getResultList();
 	}
 
 	public List<Ticket> getTicketsByOrder(int orderId) {
-		TypedQuery<Ticket> query = em.createQuery(
-				"SELECT t FROM Ticket t WHERE t.orderId = :order", Ticket.class);
+		TypedQuery<Ticket> query = em
+				.createQuery("SELECT t FROM Ticket t WHERE t.orderId = :order",
+						Ticket.class);
 		query.setParameter("order", orderId);
 		return query.getResultList();
 	}

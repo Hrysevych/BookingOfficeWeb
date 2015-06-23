@@ -62,6 +62,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 				int flightId = ticket.getFlightId();
 				Flight flight = flightDAO.getFlight(flightId);
 				flight.setTicketsBooked(flight.getTicketsBooked() - 1);
+				ticketDAO.deleteTicket(ticket.getId());
 				flightDAO.addFlight(flight);
 			}
 			orderingDAO.deleteOrdering(orderId);

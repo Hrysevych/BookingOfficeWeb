@@ -9,12 +9,12 @@
 	<ui:define name="content">
 		<h2>Administrator's page</h2>
 		#{administratorBean.refreshFlights()}
-		<h:commandButton value="Release unpaid tickets"
+		<h:form>
+			<h:panelGrid columns="1">
+			<h:commandButton value="Release unpaid tickets"
 							action="#{administratorBean.releaseUnpaidTickets()}">
 						</h:commandButton>
 		<h:outputText value="#{administratorBean.releaseMessage}"></h:outputText>
-		<h:form>
-			<h:panelGrid columns="1">
 				<h:dataTable value="#{administratorBean.flights}" var="flight"
 					styleClass="Table" headerClass="TableHeader"
 					rowClasses="TableOddRow, TableEvenRow">

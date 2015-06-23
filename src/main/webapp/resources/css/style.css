@@ -1,31 +1,31 @@
 @CHARSET "UTF-8";
 
-.flightTable {
+a{
+	background-color: brown;
+	color: white;
+	font-weight: bold;
+	font-size: 1.4em;	
+	font-style: normal;
+}
+
+.Table {
 	border-collapse: collapse;
 	border: 1px solid #000000;
 }
 
-.flightTableHeader {
+.TableHeader {
 	text-align: center;
 	background: none repeat scroll 0 0 #B5B5B5;
 	border-bottom: 1px solid #000000;
 	padding: 2px;
 }
 
-.flightTableOddRow {
+.TableOddRow {
 	text-align: center;
 	background: none repeat scroll 0 0 #FFFFFFF;
 }
 
-.flightTableEvenRow {
+.TableEvenRow {
 	text-align: center;
 	background: none repeat scroll 0 0 #D3D3D3;
-}
-
-a{
-	background-color: brown;
-	color: white;
-	font-weight: bold;
-	font-size: 1.4em;
-	font-style: normal;
 }
