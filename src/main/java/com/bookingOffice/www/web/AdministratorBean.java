@@ -44,6 +44,8 @@ public class AdministratorBean {
 		} else {
 			flight = new Flight();
 		}
+		departureTime = flight.getDepartureTime();
+		arrivalTime = flight.getArrivalTime();
 		return "newFlight";
 	}
 

@@ -1,6 +1,10 @@
 package com.bookingOffice.www;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.TimeZone;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -36,6 +40,7 @@ public class Main {
 		String password = "password";
 		System.out.println(password.hashCode());
 
+		System.out.println(TimeZone.getDefault().getID());
 		
 	}
 }

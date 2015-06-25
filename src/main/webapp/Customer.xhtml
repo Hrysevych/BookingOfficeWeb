@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
@@ -11,6 +12,7 @@
 		<h:form>
 			<h:panelGrid columns="3">
 				<h:outputText value="Departure:"></h:outputText>
+				
 				<h:inputText id="departure" value="#{customerBean.flight.departure}"
 					required="true" requiredMessage="#{msgs.fieldRequired}">
 				</h:inputText>
@@ -21,14 +23,10 @@
 					required="true" requiredMessage="#{msgs.fieldRequired}">
 				</h:inputText>
 				<h:message for="arrival" style="color:red" />
-
 				<h:outputText value="Arrival Time:"></h:outputText>
-				<h:inputText id="arrivalTime" value="#{customerBean.arrivalTime}"
-					required="false" validatorMessage="#{msgs.fieldRequired}"
-					requiredMessage="#{msgs.fieldRequired}">
-					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-				</h:inputText>
-				<h:message for="arrivalTime" style="color:red" />
+				<p:calendar value="#{customerBean.arrivalTime}"
+					pattern="dd/MM/yyyy HH:mm"
+					timeZone="#{TimeZone.getDefault().getID()}" effect="clip" />
 			</h:panelGrid>
 			<h:commandButton value="Submit"
 				action="#{customerBean.getFlightsFiltered}"></h:commandButton>

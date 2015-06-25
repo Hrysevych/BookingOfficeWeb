@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
@@ -19,12 +20,11 @@
 				<h:message for="departure" style="color:red" />
 
 				<h:outputText value="Departure Time:"></h:outputText>
-				<h:inputText id="departureTime"
-					value="#{administratorBean.departureTime}" required="false"
-					validatorMessage="#{msgs.dateFormat}"
-					requiredMessage="#{msgs.fieldRequired}">
-					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-				</h:inputText>
+				<p:calendar id="departureTime"
+					value="#{administratorBean.departureTime}"
+					pattern="dd/MM/yyyy HH:mm"
+					timeZone="#{TimeZone.getDefault().getID()}" effect="clip"
+					required="true" requiredMessage="#{msgs.fieldRequired}" />
 				<h:message for="departureTime" style="color:red" />
 
 				<h:outputText value="Arrival:"></h:outputText>
@@ -35,12 +35,11 @@
 				<h:message for="arrival" style="color:red" />
 
 				<h:outputText value="Arrival Time:"></h:outputText>
-				<h:inputText id="arrivalTime"
-					value="#{administratorBean.arrivalTime}" required="false"
-					validatorMessage="#{msgs.dateFormat}"
-					requiredMessage="#{msgs.fieldRequired}">
-					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-				</h:inputText>
+				<p:calendar id="arrivalTime"
+					value="#{administratorBean.arrivalTime}" pattern="dd/MM/yyyy HH:mm"
+					timeZone="#{TimeZone.getDefault().getID()}" effect="clip"
+					required="true" requiredMessage="#{msgs.fieldRequired}">
+				</p:calendar>
 				<h:message for="arrivalTime" style="color:red" />
 
 				<h:outputText value="Quantity of tickets total:"></h:outputText>
@@ -73,11 +72,11 @@
 			</h:panelGrid>
 			<h:commandButton value="Submit"
 				action="#{administratorBean.addFlight}"></h:commandButton>
-				<h:outputText value="	"></h:outputText>
-			
-			<h:commandButton value="Cancel"
-				action="Administrator" immediate="true"></h:commandButton>
-				<h:outputText value="	"></h:outputText>
+			<h:outputText value="	"></h:outputText>
+
+			<h:commandButton value="Cancel" action="Administrator"
+				immediate="true"></h:commandButton>
+			<h:outputText value="	"></h:outputText>
 			<h:commandButton value="DELETE"
 				action="#{administratorBean.deleteFlight()}"
 				style="background-color:red">
