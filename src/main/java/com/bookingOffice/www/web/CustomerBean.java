@@ -3,6 +3,7 @@ package com.bookingOffice.www.web;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,19 +14,22 @@ import com.bookingOffice.www.DAO.Flight;
 import com.bookingOffice.www.DAO.Person;
 import com.bookingOffice.www.DAO.Ticket;
 import com.bookingOffice.www.services.CustomerService;
-import com.bookingOffice.www.util.CartTickets;
+import com.bookingOffice.www.util.CartTicket;
+import com.bookingOffice.www.util.CitiesList;
 
 @Named
 @Scope("session")
 public class CustomerBean {
+	@Inject
+	private CustomerService customerService;
+
 	private Person customer;
 	private List<Flight> flights = null;
 	private Flight flight = null;
-	private List<CartTickets> cart = new ArrayList<>();
+	private List<CartTicket> cart = new ArrayList<>();
 	private String allDataMessage = "";
 	private Date arrivalTime = new Date();
-	@Inject
-	private CustomerService customerService;
+	private Map<String, String> cities = new CitiesList().getCities();
 
 	public String getFlightsFiltered() {
 		flight.setArrivalTime(this.arrivalTime);
@@ -33,9 +37,17 @@ public class CustomerBean {
 		return "Customer";
 	}
 
+	public String getCartSum() {
+		double sum = 0;
+		for (CartTicket cartTicket : cart) {
+			sum += cartTicket.getTicketPrice();
+		}
+		return String.valueOf(sum);
+	}
+	
 	public boolean isAllDataSet() {
 		boolean flag = true;
-		for (CartTickets ticket : cart) {
+		for (CartTicket ticket : cart) {
 			if ((ticket.getFirstName() == null || ticket.getFirstName()
 					.isEmpty())
 					|| (ticket.getLastName() == null || ticket.getLastName()
@@ -54,17 +66,15 @@ public class CustomerBean {
 		// TODO Get REAL person
 		customer.setId(2);
 		flight = new Flight();
-		flight.setDeparture("KBP");
-		flight.setArrival("JFK");
 	}
 
 	public String addTicketToCart(Flight flight) {
-		CartTickets ticket = new CartTickets(flight);
+		CartTicket ticket = new CartTicket(flight);
 		cart.add(ticket);
 		return "Customer";
 	}
 
-	public String removeTicket(CartTickets ticket) {
+	public String removeTicket(CartTicket ticket) {
 		cart.remove(ticket);
 		return "Cart";
 	}
@@ -72,11 +82,11 @@ public class CustomerBean {
 	public String submitCart() {
 		if (!isAllDataSet()) {
 			allDataMessage = "You need to fill all empty fields of all tickets in cart!";
-			return "Cart"; 
+			return "Cart";
 		}
 		allDataMessage = "";
 		ArrayList<Ticket> pureTickets = new ArrayList<Ticket>();
-		for (CartTickets cartTickets : cart) {
+		for (CartTicket cartTickets : cart) {
 			pureTickets.add(new Ticket(cartTickets));
 		}
 		customerService.submitCart(pureTickets, customer);
@@ -147,7 +157,7 @@ public class CustomerBean {
 	/**
 	 * @return the cart
 	 */
-	public List<CartTickets> getCart() {
+	public List<CartTicket> getCart() {
 		return cart;
 	}
 
@@ -155,7 +165,7 @@ public class CustomerBean {
 	 * @param cart
 	 *            the cart to set
 	 */
-	public void setCart(List<CartTickets> cart) {
+	public void setCart(List<CartTicket> cart) {
 		this.cart = cart;
 	}
 
@@ -167,10 +177,26 @@ public class CustomerBean {
 	}
 
 	/**
-	 * @param allDataMessage the allDataMessage to set
+	 * @param allDataMessage
+	 *            the allDataMessage to set
 	 */
 	public void setAllDataMessage(String allDataMessage) {
 		this.allDataMessage = allDataMessage;
+	}
+
+	/**
+	 * @return the cities
+	 */
+	public Map<String, String> getCities() {
+		return cities;
+	}
+
+	/**
+	 * @param cities
+	 *            the cities to set
+	 */
+	public void setCities(Map<String, String> cities) {
+		this.cities = cities;
 	}
 
 }

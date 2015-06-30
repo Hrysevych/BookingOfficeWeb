@@ -11,6 +11,8 @@
 		<h2>Customer's cart</h2>
 		<h:link value="Return to search" outcome="Customer"></h:link>
 		<h:form>
+		<h:outputText value = "Total cart sum - "></h:outputText>
+		<h:outputText value = "#{customerBean.getCartSum()}"></h:outputText>
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{customerBean.cart}" var="ticket"
 					styleClass="Table" headerClass="TableHeader"

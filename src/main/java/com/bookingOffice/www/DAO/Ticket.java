@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.bookingOffice.www.util.CartTickets;
+import com.bookingOffice.www.util.CartTicket;
 
 @Entity
 public class Ticket {
@@ -19,7 +19,7 @@ public class Ticket {
 	private String passport;
 
 
-	public Ticket(CartTickets cartContent) {
+	public Ticket(CartTicket cartContent) {
 		this.flightId = cartContent.getFlightId();
 		this.firstName = cartContent.getFirstName();
 		this.lastName = cartContent.getLastName();

@@ -1,9 +1,0 @@
-KBP`Kyiv
-RTM`Rotterdam
-JFK`New York
-EWR`New York
-KBL`Kabul
-ROV`Rostov-on-Don
-SVO`Moskow
-DME`Moskow
-VKO`Moskow

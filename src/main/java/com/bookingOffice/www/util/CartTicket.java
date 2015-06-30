@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import com.bookingOffice.www.DAO.Flight;
 
-public class CartTickets {
+public class CartTicket {
 	private int flightId;
 	private String departure;
 	private Timestamp departureTime;
@@ -18,10 +18,10 @@ public class CartTickets {
 	/**
 	 * 
 	 */
-	public CartTickets() {
+	public CartTicket() {
 	}
 
-	public CartTickets(Flight flight) {
+	public CartTicket(Flight flight) {
 		flightId = flight.getId();
 		departure = flight.getDeparture();
 		departureTime = flight.getDepartureTime();

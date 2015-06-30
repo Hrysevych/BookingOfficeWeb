@@ -13,11 +13,10 @@
 		<h:form>
 			<h:panelGrid columns="3">
 				<h:outputText value="Departure:"></h:outputText>
-				<h:inputText id="departure"
-					value="#{administratorBean.flight.departure}" required="true"
-					requiredMessage="#{msgs.fieldRequired}">
-				</h:inputText>
-				<h:message for="departure" style="color:red" />
+				<p:selectOneMenu value="#{administratorBean.flight.departure}">
+					<f:selectItems value="#{administratorBean.cities}"></f:selectItems>
+				</p:selectOneMenu>
+				<h:outputText/>
 
 				<h:outputText value="Departure Time:"></h:outputText>
 				<p:calendar id="departureTime"
@@ -28,10 +27,9 @@
 				<h:message for="departureTime" style="color:red" />
 
 				<h:outputText value="Arrival:"></h:outputText>
-				<h:inputText id="arrival"
-					value="#{administratorBean.flight.arrival}" required="true"
-					requiredMessage="#{msgs.fieldRequired}">
-				</h:inputText>
+				<p:selectOneMenu value="#{administratorBean.flight.departure}">
+					<f:selectItems value="#{administratorBean.cities}"></f:selectItems>
+				</p:selectOneMenu>
 				<h:message for="arrival" style="color:red" />
 
 				<h:outputText value="Arrival Time:"></h:outputText>

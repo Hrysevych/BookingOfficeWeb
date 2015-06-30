@@ -17,7 +17,7 @@ public class PersonDAOImpl implements PersonDAO {
 	@Transactional
 	public void create(Person person) {
 		if (person.getId() == 0) {
-			em.persist(person);	
+			em.persist(person);
 		} else {
 			em.merge(person);
 		}
@@ -41,6 +41,19 @@ public class PersonDAOImpl implements PersonDAO {
 
 	public Person getPerson(int id) {
 		return em.find(Person.class, id);
+	}
+
+	public Person getPerson(String email) {
+		TypedQuery<Person> query = em.createQuery(
+				"SELECT p FROM Person p WHERE LOWER(p.email) = LOWER(:email)", Person.class);
+		query.setParameter("email", email);
+		Person person;
+		try {
+			person = query.getSingleResult();
+		} catch (Exception e) {
+			person = new Person();
+		}
+		return person;
 	}
 
 	public List<Person> getPersonsList() {

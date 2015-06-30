@@ -1,6 +1,8 @@
 package com.bookingOffice.www.web;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.DAO.Flight;
 import com.bookingOffice.www.services.AdministratorService;
+import com.bookingOffice.www.util.CitiesList;
 
 @Named
 @Scope("session")
@@ -25,7 +28,22 @@ public class AdministratorBean {
 	private Date arrivalTime = new Date();
 	
 	private String releaseMessage = "";
+	
+	private Map<String, String> cities = new CitiesList().getCities();
 
+	public String getCityFromCode(String code) {
+		for (Map.Entry<String, String> city : cities.entrySet()) {
+			if (city.getValue().equals(code)) return city.getKey();
+		}
+		return "";		
+	}
+	
+	public String formatDate(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");						
+		String formatted = dateFormat.format(date).toString();
+		return formatted;
+	}
+	
 	public void refreshFlights() {
 		flights = administratorService.getFlights();
 	}
@@ -167,6 +185,20 @@ public class AdministratorBean {
 	 */
 	public void setReleaseMessage(String releaseMessage) {
 		this.releaseMessage = releaseMessage;
+	}
+
+	/**
+	 * @return the cities
+	 */
+	public Map<String, String> getCities() {
+		return cities;
+	}
+
+	/**
+	 * @param cities the cities to set
+	 */
+	public void setCities(Map<String, String> cities) {
+		this.cities = cities;
 	}
 
 }

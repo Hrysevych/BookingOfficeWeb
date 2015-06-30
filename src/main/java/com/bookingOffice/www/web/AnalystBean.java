@@ -7,6 +7,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.LinearAxis;
 import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.services.AnalystService;
@@ -25,10 +31,58 @@ public class AnalystBean {
 	private SellsReport totalReport = null;
 	private SellsReport report = null;
 
+	private LineChartModel model = new LineChartModel();
+
 	public String refreshReports() {
 		totalReport = analystService.getTotalReport(from, until);
 		reports = analystService.getDailyReports(from, until);
+		createModel();
 		return "Analyst";
+	}
+
+	private void createModel() {
+
+		LineChartSeries tickets = new LineChartSeries();
+		tickets.setLabel("Tickets");
+		tickets.setXaxis(AxisType.X);
+		tickets.setYaxis(AxisType.Y);
+
+		LineChartSeries sums = new LineChartSeries();
+		sums.setLabel("Sum");
+		sums.setXaxis(AxisType.X);
+		sums.setYaxis(AxisType.Y2);
+
+		double maxSum = 0;
+		int maxTickets = 0;
+		for (SellsReport sellsReport : reports) {
+			tickets.set(sellsReport.getDate(), sellsReport.getTicketsQuantity());
+			sums.set(sellsReport.getDate(), sellsReport.getTotalSum());
+			if (sellsReport.getTotalSum() > maxSum) {
+				maxSum = sellsReport.getTotalSum();
+			}
+			if (sellsReport.getTicketsQuantity() > maxTickets) {
+				maxTickets = sellsReport.getTicketsQuantity();
+			}
+		}
+
+		model.addSeries(tickets);
+		model.addSeries(sums);
+
+		model.setTitle("Reports");
+		model.setMouseoverHighlight(false);
+
+		model.getAxes().put(AxisType.X, new DateAxis("Dates"));
+
+		Axis yAxis = model.getAxis(AxisType.Y);
+		yAxis.setLabel("Tickets sold");
+		yAxis.setMin(0);
+		yAxis.setMax(maxTickets);
+
+		Axis y2Axis = new LinearAxis("Sum");
+		y2Axis.setMin(0);
+		y2Axis.setMax(maxSum);
+
+		model.getAxes().put(AxisType.Y2, y2Axis);
 	}
 
 	public AnalystBean() {
@@ -115,5 +169,20 @@ public class AnalystBean {
 	public void setReport(SellsReport report) {
 		this.report = report;
 	}
+
+	/**
+	 * @return the model
+	 */
+	public LineChartModel getModel() {
+		return model;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(LineChartModel model) {
+		this.model = model;
+	}
+
 
 }

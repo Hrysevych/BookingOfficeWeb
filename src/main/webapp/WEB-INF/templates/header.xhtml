@@ -1,15 +1,63 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-		xmlns:h="http://java.sun.com/jsf/html">
-<body>
-	<ui:composition> 
-     <h1>Booking Office</h1>
-</ui:composition> 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition>
+		<h1>Booking Office</h1>
+		<h:commandButton type="submit" onclick="PF('logInDialog').show()"
+			rendered="#{empty authorizationBean.userHeader}" style="float: right"
+			image="#{resource['images/log_in.png']}" />
+		<h:commandButton type="submit" onclick="PF('logOutDialog').show()"
+			rendered="#{not empty authorizationBean.userHeader}"
+			style="float: right" image="#{resource['images/log_out.png']}" />
+		<p:outputLabel value="#{authorizationBean.userHeader}"
+			rendered="#{not empty authorizationBean.userHeader}"
+			style="float: right" />
+			<br/>
 
+		<p:dialog header="Log In" widgetVar="logInDialog" modal="true"
+			resizable="false">
+			<h:form>
+				<h:panelGrid columns="3">
+					<p:outputLabel value="email" />
+					<p:inputText id="email" value="#{authorizationBean.email}" />
+					<h:message for="email" style="color:red" />
+
+					<p:outputLabel value="password" />
+					<p:password id="password" value="#{authorizationBean.password}" />
+					<p:message for="email" style="color:red" />
+				</h:panelGrid>
+				<p:commandButton value="OK" action="#{authorizationBean.logIn()}" />
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Error" widgetVar="wrongLogInMessage" modal="true"
+			resizable="false">
+			<h:form>
+				<p:outputLabel value="Wrong user name or password" />
+				<p:commandButton value="Ok" onclick="PF('wrongLogInMessage').hide()" />
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Log Out" widgetVar="logOutDialog" resizable="false">
+			<h:form>
+				<p:outputLabel value="Do you really want to log out?" />
+				<td />
+				<p:commandButton type="submit" value="YES"
+					action="#{authorizationBean.logOut()}" />
+				<p:commandButton value="NO" onclick="PF('logOutDialog').hide()" />
+			</h:form>
+		</p:dialog>
+
+
+
+	</ui:composition>
 	<div
 		style="width: 100%; font-size: 36px; line-height: 48px; background-color: navy; color: white">My
 		Facelet Application</div>
-</body>
+</h:body>
 </html>

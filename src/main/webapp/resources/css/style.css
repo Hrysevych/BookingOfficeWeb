@@ -1,16 +1,9 @@
 @CHARSET "UTF-8";
 
-a{
-	background-color: brown;
-	color: white;
-	font-weight: bold;
-	font-size: 1.4em;	
-	font-style: normal;
-}
-
 .Table {
 	border-collapse: collapse;
 	border: 1px solid #000000;
+	font-size: 140%;
 }
 
 .TableHeader {
@@ -23,9 +16,26 @@ a{
 .TableOddRow {
 	text-align: center;
 	background: none repeat scroll 0 0 #FFFFFFF;
+	background-color: white;
 }
 
 .TableEvenRow {
 	text-align: center;
 	background: none repeat scroll 0 0 #D3D3D3;
+}
+
+.Body {	
+	text-align: justify;
+	color: #000000;
+	background-color: #44b1ff;
+	background-image: url(‘../images/header.jpg’);
+}
+
+.switch {
+	
+}
+
+h1, h2 {
+	text-align: center;
+	font-size: 200%;
 }

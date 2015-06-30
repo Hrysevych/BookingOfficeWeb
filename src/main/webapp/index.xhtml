@@ -11,18 +11,17 @@
 		<h2>Customer's page</h2>
 		<h:form>
 			<h:panelGrid columns="3">
-				<h:outputText value="Departure:"></h:outputText>
-				
-				<h:inputText id="departure" value="#{customerBean.flight.departure}"
-					required="true" requiredMessage="#{msgs.fieldRequired}">
-				</h:inputText>
-				<h:message for="departure" style="color:red" />
+				<h:outputText value="Departure:" styleClass="OutText"></h:outputText>
+				<p:selectOneMenu value="#{customerBean.flight.departure}">
+					<f:selectItems value="#{customerBean.cities}"></f:selectItems>
+				</p:selectOneMenu>
+				<h:outputText></h:outputText>
 
 				<h:outputText value="Arrival:"></h:outputText>
-				<h:inputText id="arrival" value="#{customerBean.flight.arrival}"
-					required="true" requiredMessage="#{msgs.fieldRequired}">
-				</h:inputText>
-				<h:message for="arrival" style="color:red" />
+				<p:selectOneMenu value="#{customerBean.flight.arrival}">
+					<f:selectItems value="#{customerBean.cities}"></f:selectItems>
+				</p:selectOneMenu>
+				<h:outputText></h:outputText>
 				<h:outputText value="Arrival Time:"></h:outputText>
 				<p:calendar value="#{customerBean.arrivalTime}"
 					pattern="dd/MM/yyyy HH:mm"

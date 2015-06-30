@@ -34,6 +34,7 @@ public class SecurityBean {
 		} else {
 			person = new Person();
 		}
+		role = person.getRole().ordinal();
 		return "newPerson";
 	}
 

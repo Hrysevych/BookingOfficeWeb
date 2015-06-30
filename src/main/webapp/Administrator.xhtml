@@ -4,18 +4,24 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Administrator's page</h2>
 		#{administratorBean.refreshFlights()}
-		<h:form>
+		<h:form rendered="#{authorizationBean.person.role.ordinal() != 1}">
+			<p:outputLabel
+				value="You are not allowed to see this page content. Return to customer area or login appropriate account"></p:outputLabel>
+			<p:commandButton value="Return" action="index"></p:commandButton>
+		</h:form>
+		<h:form rendered="#{authorizationBean.person.role.ordinal() == 1}">
 			<h:panelGrid columns="1">
-			<h:commandButton value="Release unpaid tickets"
-							action="#{administratorBean.releaseUnpaidTickets()}">
-						</h:commandButton>
-		<h:outputText value="#{administratorBean.releaseMessage}"></h:outputText>
+				<h:commandButton value="Release unpaid tickets"
+					action="#{administratorBean.releaseUnpaidTickets()}">
+				</h:commandButton>
+				<h:outputText value="#{administratorBean.releaseMessage}"></h:outputText>
 				<h:dataTable value="#{administratorBean.flights}" var="flight"
 					styleClass="Table" headerClass="TableHeader"
 					rowClasses="TableOddRow, TableEvenRow">
@@ -24,21 +30,21 @@
 					#{flight.id} 
 			</h:column>
 					<h:column>
-						<f:facet name="header">Departure</f:facet> 
-				#{flight.departure} 
+						<f:facet name="header">Departure</f:facet>
+				#{administratorBean.getCityFromCode(flight.departure)} 
 			</h:column>
 					<h:column>
 						<f:facet name="header">Departure Time</f:facet> 
-				#{flight.departureTime} 
+				#{administratorBean.formatDate(flight.departureTime)}
 			</h:column>
 					<h:column>
 						<f:facet name="header">Arrival</f:facet> 
-				#{flight.arrival} 
+				#{administratorBean.getCityFromCode(flight.arrival)}
 			</h:column>
 					<h:column>
-						<f:facet name="header">Arrival Time</f:facet> 
-				#{flight.arrivalTime} 
-			</h:column>
+						<f:facet name="header">Arrival Time</f:facet>
+						#{administratorBean.formatDate(flight.arrivalTime)}
+					</h:column>
 					<h:column>
 						<f:facet name="header">Ticket price</f:facet> 
 				#{flight.ticketPrice} 
@@ -56,17 +62,17 @@
 				#{flight.ticketsSold} 
 			</h:column>
 					<h:column>
-						<h:commandButton value="edit flight"
-							action="#{administratorBean.editFlight(flight.id)}">
-						</h:commandButton>
+						<h:commandButton
+							action="#{administratorBean.editFlight(flight.id)}"
+							image="#{resource['images/editor_pencil.png']}" />
 					</h:column>
 				</h:dataTable>
 			</h:panelGrid>
 			<h:commandButton value="add flight"
-							action="#{administratorBean.editFlight(0)}">
-						</h:commandButton>
+				action="#{administratorBean.editFlight(0)}">
+			</h:commandButton>
 		</h:form>
-	
+
 	</ui:define>
 </ui:composition>
 </html>

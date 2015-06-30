@@ -13,6 +13,8 @@ public interface PersonDAO {
 	public void deletePerson(int id);
 
 	public Person getPerson(int id);
+	
+	public Person getPerson(String email);
 
 	public List<Person> getPersonsList();
 }

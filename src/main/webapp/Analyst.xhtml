@@ -12,23 +12,22 @@
 		<h:form>
 			<h:panelGrid columns="2">
 				<h:outputText value="start date for report:"></h:outputText>
-				<h:inputText value="#{analystBean.from}">
-					<f:convertDateTime pattern="dd.MM.yyyy" type="date" />
-				</h:inputText>
+				<p:calendar value="#{analystBean.from}" pattern="dd/MM/yyyy"
+					timeZone="#{TimeZone.getDefault().getID()}" effect="clip"
+					styleClass="Calendar" />
 
 				<h:outputText value="end date for report:"></h:outputText>
-				<h:inputText value="#{analystBean.until}">
-					<f:convertDateTime pattern="dd.MM.yyyy" type="date" />
-				</h:inputText>
+				<p:calendar value="#{analystBean.until}" pattern="dd/MM/yyyy"
+					timeZone="#{TimeZone.getDefault().getID()}" effect="clip" />
 				<h:commandButton type="submit" value="submit"
 					action="#{analystBean.refreshReports()}"></h:commandButton>
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-			<h:outputText value="Total tickets sold - "/>
-			<h:outputText value="#{analystBean.totalReport.ticketsQuantity}"/>
-			
-			<h:outputText value="For total sum - "/>
-			<h:outputText value="#{analystBean.totalReport.totalSum}"/>
+				<h:outputText value="Total tickets sold - " />
+				<h:outputText value="#{analystBean.totalReport.ticketsQuantity}" />
+
+				<h:outputText value="For total sum - " />
+				<h:outputText value="#{analystBean.totalReport.totalSum}" />
 			</h:panelGrid>
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{analystBean.reports}" var="report"
@@ -49,6 +48,8 @@
 			</h:column>
 				</h:dataTable>
 			</h:panelGrid>
+			<p:chart type="line" model="#{analystBean.model}"
+				rendered="#{not empty analystBean.reports}"></p:chart>
 		</h:form>
 	</ui:define>
 </ui:composition>
