@@ -11,7 +11,6 @@ import com.bookingOffice.www.DAO.Flight;
 import com.bookingOffice.www.DAO.FlightDAO;
 import com.bookingOffice.www.DAO.Order;
 import com.bookingOffice.www.DAO.OrderDAO;
-import com.bookingOffice.www.DAO.Person;
 import com.bookingOffice.www.DAO.Ticket;
 import com.bookingOffice.www.DAO.TicketDAO;
 
@@ -28,9 +27,9 @@ public class CustomerServiceImpl implements CustomerService {
 		return flightDAO.getFlightsFiltered(flight);
 	}
 
-	public void submitCart(List<Ticket> tickets, Person person) {
+	public void submitCart(List<Ticket> tickets, int personId) {
 		Order ordering = new Order();
-		ordering.setBuyerId(person.getId());
+		ordering.setBuyerId(personId);
 		ordering.setPayed(0);
 		ordering.setValidDate(Date.valueOf(LocalDate.now().plusDays(3)));
 		orderingDAO.addOrdering(ordering);

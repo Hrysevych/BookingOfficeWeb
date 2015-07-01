@@ -16,7 +16,8 @@
 			<p:commandButton value="Return" action="index"></p:commandButton>
 		</h:form>
 		<h:form rendered="#{authorizationBean.person.role.ordinal() == 2}">
-		<h:outputText value="No orders to confirm :-(" rendered="#{empty accountantBean.orders}"></h:outputText>
+			<h:outputText value="No orders to confirm :-("
+				rendered="#{empty accountantBean.orders}"></h:outputText>
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{accountantBean.orders}" var="order"
 					styleClass="Table" headerClass="TableHeader"
@@ -25,28 +26,30 @@
 					<h:column>
 						<f:facet name="header">Id</f:facet> 
 					#{order.id} 
-			</h:column>
-			
+					</h:column>
+
 					<h:column>
 						<f:facet name="header">First name</f:facet> 
 					#{order.firstName} 
-			</h:column>
-			
+					</h:column>
+
 					<h:column>
 						<f:facet name="header">Last name</f:facet> 
 					#{order.lastName} 
-			</h:column>
-			
+					</h:column>
+
 					<h:column>
 						<f:facet name="header">Valid date</f:facet> 
 					#{order.validDate} 
-			</h:column>
+					</h:column>
 
 					<h:column>
-					<h:commandButton value="Mark as payed" action="#{accountantBean.markOrderPayed(order.id)}">
-					</h:commandButton>	 
-			</h:column>
-			
+						<f:facet name="header">Mark as payed</f:facet>
+						<h:commandButton
+							action="#{accountantBean.markOrderPayed(order.id)}"
+							image="#{resource['images/check.png']}" />
+					</h:column>
+
 				</h:dataTable>
 			</h:panelGrid>
 		</h:form>

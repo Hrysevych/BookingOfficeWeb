@@ -1,5 +1,6 @@
 package com.bookingOffice.www.web;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.services.AnalystService;
 import com.bookingOffice.www.util.SellsReport;
+import com.bookingOffice.www.util.ValidityDurationUtil;
 
 @Named
 @Scope("session")
@@ -31,7 +33,7 @@ public class AnalystBean {
 	private SellsReport totalReport = null;
 	private SellsReport report = null;
 
-	private LineChartModel model = new LineChartModel();
+	private LineChartModel model;
 
 	public String refreshReports() {
 		totalReport = analystService.getTotalReport(from, until);
@@ -40,7 +42,15 @@ public class AnalystBean {
 		return "Analyst";
 	}
 
+	public String formatDate(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		String formatted = dateFormat.format(date).toString();
+		return formatted;
+	}
+
 	private void createModel() {
+		model = new LineChartModel();
+		model.setLegendPosition("e");
 
 		LineChartSeries tickets = new LineChartSeries();
 		tickets.setLabel("Tickets");
@@ -54,24 +64,51 @@ public class AnalystBean {
 
 		double maxSum = 0;
 		int maxTickets = 0;
+		Date minDate = until;
+		Date maxDate = from;
 		for (SellsReport sellsReport : reports) {
-			tickets.set(sellsReport.getDate(), sellsReport.getTicketsQuantity());
-			sums.set(sellsReport.getDate(), sellsReport.getTotalSum());
+			tickets.set(formatDate(sellsReport.getDate()),
+					sellsReport.getTicketsQuantity());
+			sums.set(formatDate(sellsReport.getDate()),
+					sellsReport.getTotalSum());
+			
 			if (sellsReport.getTotalSum() > maxSum) {
 				maxSum = sellsReport.getTotalSum();
 			}
+			
 			if (sellsReport.getTicketsQuantity() > maxTickets) {
 				maxTickets = sellsReport.getTicketsQuantity();
 			}
+			
+			if (sellsReport.getDate().before(minDate)) {
+				minDate = sellsReport.getDate();
+			}
+			
+			if (sellsReport.getDate().after(maxDate)) {
+				maxDate = sellsReport.getDate();
+			}
 		}
+
+		minDate = ValidityDurationUtil.toNormalDate(minDate);
+		
+		maxDate = ValidityDurationUtil.toValidDate(maxDate);
+		
+		maxTickets *= 1.25;
+		maxTickets += 1;
+		
+		maxSum *= 1.25;
+		maxSum += 10;
 
 		model.addSeries(tickets);
 		model.addSeries(sums);
 
 		model.setTitle("Reports");
-		model.setMouseoverHighlight(false);
 
-		model.getAxes().put(AxisType.X, new DateAxis("Dates"));
+		DateAxis xAxis = new DateAxis("Dates");
+		xAxis.setMin(formatDate(minDate));
+		xAxis.setMax(formatDate(maxDate));
+		xAxis.setTickFormat("%#d %b %y");
+		model.getAxes().put(AxisType.X, xAxis);
 
 		Axis yAxis = model.getAxis(AxisType.Y);
 		yAxis.setLabel("Tickets sold");
@@ -178,11 +215,11 @@ public class AnalystBean {
 	}
 
 	/**
-	 * @param model the model to set
+	 * @param model
+	 *            the model to set
 	 */
 	public void setModel(LineChartModel model) {
 		this.model = model;
 	}
-
 
 }

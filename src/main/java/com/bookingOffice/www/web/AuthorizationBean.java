@@ -44,15 +44,20 @@ public class AuthorizationBean {
 
 	public String logOut() {
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-		person = null;
+		person = authorizationService.getPerson(2);
 		email = "";
 		password = "";
 		userHeader = "";
 		requestContext.execute("PF('logOutDialog').hide()");
 		return "index";
 	}
-
+	
+	public void getDefaultPerson() {
+		person = authorizationService.getPerson("default@user.com");
+	}
+	
 	public AuthorizationBean() {
+		person = null;
 	}
 
 	/**

@@ -11,7 +11,6 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.DAO.Flight;
-import com.bookingOffice.www.DAO.Person;
 import com.bookingOffice.www.DAO.Ticket;
 import com.bookingOffice.www.services.CustomerService;
 import com.bookingOffice.www.util.CartTicket;
@@ -23,7 +22,6 @@ public class CustomerBean {
 	@Inject
 	private CustomerService customerService;
 
-	private Person customer;
 	private List<Flight> flights = null;
 	private Flight flight = null;
 	private List<CartTicket> cart = new ArrayList<>();
@@ -34,7 +32,7 @@ public class CustomerBean {
 	public String getFlightsFiltered() {
 		flight.setArrivalTime(this.arrivalTime);
 		flights = customerService.getFlightsFiltered(flight);
-		return "Customer";
+		return "index";
 	}
 
 	public String getCartSum() {
@@ -43,6 +41,13 @@ public class CustomerBean {
 			sum += cartTicket.getTicketPrice();
 		}
 		return String.valueOf(sum);
+	}
+	
+	public String getCityFromCode(String code) {
+		for (Map.Entry<String, String> city : cities.entrySet()) {
+			if (city.getValue().equals(code)) return city.getKey();
+		}
+		return "";		
 	}
 	
 	public boolean isAllDataSet() {
@@ -62,24 +67,22 @@ public class CustomerBean {
 	}
 
 	public CustomerBean() {
-		customer = new Person();
-		// TODO Get REAL person
-		customer.setId(2);
 		flight = new Flight();
 	}
 
 	public String addTicketToCart(Flight flight) {
 		CartTicket ticket = new CartTicket(flight);
 		cart.add(ticket);
-		return "Customer";
+		return "index";
 	}
 
 	public String removeTicket(CartTicket ticket) {
+		allDataMessage = "";
 		cart.remove(ticket);
 		return "Cart";
 	}
 
-	public String submitCart() {
+	public String submitCart(int id) {
 		if (!isAllDataSet()) {
 			allDataMessage = "You need to fill all empty fields of all tickets in cart!";
 			return "Cart";
@@ -89,7 +92,7 @@ public class CustomerBean {
 		for (CartTicket cartTickets : cart) {
 			pureTickets.add(new Ticket(cartTickets));
 		}
-		customerService.submitCart(pureTickets, customer);
+		customerService.submitCart(pureTickets, id);
 		cart.clear();
 		return "Customer";
 	}
@@ -137,21 +140,6 @@ public class CustomerBean {
 	 */
 	public void setArrivalTime(Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
-	}
-
-	/**
-	 * @return the customer
-	 */
-	public Person getCustomer() {
-		return customer;
-	}
-
-	/**
-	 * @param customer
-	 *            the customer to set
-	 */
-	public void setCustomer(Person customer) {
-		this.customer = customer;
 	}
 
 	/**

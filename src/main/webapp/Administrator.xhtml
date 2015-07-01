@@ -19,8 +19,7 @@
 		<h:form rendered="#{authorizationBean.person.role.ordinal() == 1}">
 			<h:panelGrid columns="1">
 				<h:commandButton value="Release unpaid tickets"
-					action="#{administratorBean.releaseUnpaidTickets()}">
-				</h:commandButton>
+					action="#{administratorBean.releaseUnpaidTickets()}" styleClass="Button"/>
 				<h:outputText value="#{administratorBean.releaseMessage}"></h:outputText>
 				<h:dataTable value="#{administratorBean.flights}" var="flight"
 					styleClass="Table" headerClass="TableHeader"
@@ -54,11 +53,11 @@
 				#{flight.ticketsTotal} 
 			</h:column>
 					<h:column>
-						<f:facet name="header">Tickets booked</f:facet> 
+						<f:facet name="header">booked</f:facet> 
 				#{flight.ticketsBooked} 
 			</h:column>
 					<h:column>
-						<f:facet name="header">Tickets sold</f:facet> 
+						<f:facet name="header">sold</f:facet> 
 				#{flight.ticketsSold} 
 			</h:column>
 					<h:column>
@@ -69,8 +68,7 @@
 				</h:dataTable>
 			</h:panelGrid>
 			<h:commandButton value="add flight"
-				action="#{administratorBean.editFlight(0)}">
-			</h:commandButton>
+				action="#{administratorBean.editFlight(0)}" styleClass="Button"/>
 		</h:form>
 
 	</ui:define>

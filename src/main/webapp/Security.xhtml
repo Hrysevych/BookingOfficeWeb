@@ -11,8 +11,12 @@
 	<ui:define name="content">
 		<h2>Security's page</h2>
 		#{securityBean.refreshPersons()}
-
-		<h:form>
+		<h:form rendered="#{authorizationBean.person.role.ordinal() != 4}">
+			<p:outputLabel
+				value="You are not allowed to see this page content. Return to customer area or login appropriate account"></p:outputLabel>
+			<p:commandButton value="Return" action="index"></p:commandButton>
+		</h:form>
+		<h:form rendered="#{authorizationBean.person.role.ordinal() == 4}">
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{securityBean.persons}" var="person"
 					styleClass="Table" headerClass="TableHeader"
@@ -63,8 +67,7 @@
 				</h:dataTable>
 			</h:panelGrid>
 			<h:commandButton value="add person"
-				action="#{securityBean.editPerson(0)}">
-			</h:commandButton>
+				action="#{securityBean.editPerson(0)}" styleClass="Button" />
 		</h:form>
 
 	</ui:define>

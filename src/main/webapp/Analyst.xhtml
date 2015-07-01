@@ -9,8 +9,13 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Analyst's page</h2>
-		<h:form>
-			<h:panelGrid columns="2">
+		<h:form rendered="#{authorizationBean.person.role.ordinal() != 3}">
+			<p:outputLabel
+				value="You are not allowed to see this page content. Return to customer area or login appropriate account"></p:outputLabel>
+			<p:commandButton value="Return" action="index"></p:commandButton>
+		</h:form>
+		<h:form rendered="#{authorizationBean.person.role.ordinal() == 3}">
+			<h:panelGrid columns="2" styleClass="OutText">
 				<h:outputText value="start date for report:"></h:outputText>
 				<p:calendar value="#{analystBean.from}" pattern="dd/MM/yyyy"
 					timeZone="#{TimeZone.getDefault().getID()}" effect="clip"
@@ -20,9 +25,10 @@
 				<p:calendar value="#{analystBean.until}" pattern="dd/MM/yyyy"
 					timeZone="#{TimeZone.getDefault().getID()}" effect="clip" />
 				<h:commandButton type="submit" value="submit"
-					action="#{analystBean.refreshReports()}"></h:commandButton>
+					action="#{analystBean.refreshReports()}" styleClass="InText"></h:commandButton>
 			</h:panelGrid>
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="2" styleClass="OutText"
+				rendered="#{not empty analystBean.reports}">
 				<h:outputText value="Total tickets sold - " />
 				<h:outputText value="#{analystBean.totalReport.ticketsQuantity}" />
 
@@ -35,21 +41,21 @@
 					rowClasses="TableOddRow, TableEvenRow"
 					rendered="#{not empty analystBean.reports}">
 					<h:column>
-						<f:facet name="header">Date:</f:facet> 
+						<f:facet name="header">Date</f:facet> 
 				#{report.date} 
 			</h:column>
 					<h:column>
-						<f:facet name="header">Tickets sold:</f:facet> 
+						<f:facet name="header">Tickets</f:facet> 
 				#{report.ticketsQuantity} 
 			</h:column>
 					<h:column>
-						<f:facet name="header">for sum of:</f:facet> 
+						<f:facet name="header">Total</f:facet> 
 				#{report.totalSum} 
 			</h:column>
 				</h:dataTable>
 			</h:panelGrid>
 			<p:chart type="line" model="#{analystBean.model}"
-				rendered="#{not empty analystBean.reports}"></p:chart>
+				rendered="#{not empty analystBean.reports}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

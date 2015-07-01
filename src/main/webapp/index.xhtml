@@ -17,18 +17,23 @@
 				</p:selectOneMenu>
 				<h:outputText></h:outputText>
 
-				<h:outputText value="Arrival:"></h:outputText>
+				<h:outputText value="Arrival:" styleClass="OutText"></h:outputText>
 				<p:selectOneMenu value="#{customerBean.flight.arrival}">
 					<f:selectItems value="#{customerBean.cities}"></f:selectItems>
 				</p:selectOneMenu>
 				<h:outputText></h:outputText>
-				<h:outputText value="Arrival Time:"></h:outputText>
+				<h:outputText value="Arrival Time:" styleClass="OutText"></h:outputText>
 				<p:calendar value="#{customerBean.arrivalTime}"
 					pattern="dd/MM/yyyy HH:mm"
 					timeZone="#{TimeZone.getDefault().getID()}" effect="clip" />
 			</h:panelGrid>
 			<h:commandButton value="Submit"
-				action="#{customerBean.getFlightsFiltered}"></h:commandButton>
+				action="#{customerBean.getFlightsFiltered}"
+				image="#{resource['images/go_forward.png']}" />
+			<h:commandButton action="Cart" image="#{resource['images/cart.png']}"
+				style="float: right;" rendered="#{not empty customerBean.cart}" />
+
+
 		</h:form>
 
 		<h:form>
@@ -59,13 +64,13 @@
 			</h:column>
 					<h:column>
 						<h:commandButton value="Add to cart"
-							action="#{customerBean.addTicketToCart(flight)}">
-						</h:commandButton>
+							action="#{customerBean.addTicketToCart(flight)}" 
+							image="#{resource['images/add_to_cart.png']}"
+							/>
 					</h:column>
 				</h:dataTable>
 			</h:panelGrid>
-			<h:link value="Cart" outcome="Cart"
-				rendered="#{not empty customerBean.cart}"></h:link>
+
 		</h:form>
 
 	</ui:define>

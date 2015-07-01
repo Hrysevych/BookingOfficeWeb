@@ -4,19 +4,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Customer's cart</h2>
-		<h:link value="Return to search" outcome="Customer"></h:link>
+		<h:commandButton value="Return to search" action="index" styleClass="Button"/>
 		<h:form>
-		<h:outputText value = "Total cart sum - "></h:outputText>
-		<h:outputText value = "#{customerBean.getCartSum()}"></h:outputText>
+			<p:outputLabel value="Total cart sum - " rendered="#{not empty customerBean.cart}" />
+			<p:outputLabel value="#{customerBean.getCartSum()}" rendered="#{not empty customerBean.cart}" />
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{customerBean.cart}" var="ticket"
 					styleClass="Table" headerClass="TableHeader"
-					rowClasses="TableOddRow, TableEvenRow" rendered="#{not empty customerBean.cart}">
+					rowClasses="TableOddRow, TableEvenRow"
+					rendered="#{not empty customerBean.cart}">
 					<h:column>
 						<f:facet name="header">Departure</f:facet> 
 				#{ticket.departure}
@@ -55,13 +57,21 @@
 					<h:column>
 						<h:commandButton value="Remove ticket"
 							action="#{customerBean.removeTicket(ticket)}"
+							image="#{resource['images/erase.png']}" 
 							immediate="true">
 						</h:commandButton>
 					</h:column>
 				</h:dataTable>
-				<h:outputText value="#{customerBean.allDataMessage}" style="color:red"></h:outputText>
-				<h:commandButton value="Submit" action="#{customerBean.submitCart}" rendered="#{not empty customerBean.cart}"></h:commandButton>
-				
+				<h:outputLabel value="#{customerBean.allDataMessage}"
+					style="color:red" />
+
+				<c:if test="#{authorizationBean.person eq null}">
+					#{authorizationBean.getDefaultPerson()}
+				</c:if>
+
+				<h:commandButton value="Submit order"
+					action="#{customerBean.submitCart(authorizationBean.person.getId())}"
+					rendered="#{not empty customerBean.cart}" styleClass="Button"/>
 			</h:panelGrid>
 		</h:form>
 	</ui:define>

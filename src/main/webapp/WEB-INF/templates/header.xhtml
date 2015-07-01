@@ -31,7 +31,7 @@
 					<p:password id="password" value="#{authorizationBean.password}" />
 					<p:message for="email" style="color:red" />
 				</h:panelGrid>
-				<p:commandButton value="OK" action="#{authorizationBean.logIn()}" />
+				<h:commandButton value="OK" action="#{authorizationBean.logIn()}" styleClass="Button"/>
 			</h:form>
 		</p:dialog>
 
@@ -39,7 +39,7 @@
 			resizable="false">
 			<h:form>
 				<p:outputLabel value="Wrong user name or password" />
-				<p:commandButton value="Ok" onclick="PF('wrongLogInMessage').hide()" />
+				<h:commandButton value="Ok" onclick="PF('wrongLogInMessage').hide()" styleClass="Button"/>
 			</h:form>
 		</p:dialog>
 
