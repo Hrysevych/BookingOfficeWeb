@@ -17,4 +17,6 @@ public interface PersonDAO {
 	public Person getPerson(String email);
 
 	public List<Person> getPersonsList();
+
+	public int getLastOrderId(int buyerId);
 }

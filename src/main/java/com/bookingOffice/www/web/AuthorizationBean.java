@@ -21,6 +21,10 @@ public class AuthorizationBean {
 	private String password;
 	private String userHeader = "";
 
+	public String getLastOrderId() {
+		return String.valueOf(authorizationService.getLastOrderId(person.getId()));
+	}
+	
 	public String logIn() {
 		Person logInPerson = authorizationService.getPerson(email);
 		RequestContext requestContext = RequestContext.getCurrentInstance();

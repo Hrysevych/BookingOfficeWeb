@@ -6,6 +6,7 @@ public class SellsReport {
 	private Date date;
 	private int ticketsQuantity;
 	private double totalSum;
+	private String destination;
 
 	/**
 	 * @return the date
@@ -73,6 +74,13 @@ public class SellsReport {
 		this.ticketsQuantity = ticketsQuantity.intValue();
 		this.totalSum = totalSum;
 	}
+	
+	public SellsReport(Object date, Long ticketsQuantity, double totalSum, String destination) {
+		super();
+		this.destination = destination;
+		this.ticketsQuantity = ticketsQuantity.intValue();
+		this.totalSum = totalSum;
+	}
 
 	public SellsReport() {
 	}
@@ -81,5 +89,19 @@ public class SellsReport {
 	public String toString() {
 		return "SellsReport [date=" + date + ", ticketsQuantity="
 				+ ticketsQuantity + ", totalSum=" + totalSum + "]";
+	}
+
+	/**
+	 * @return the destination
+	 */
+	public String getDestination() {
+		return destination;
+	}
+
+	/**
+	 * @param destination the destination to set
+	 */
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 }

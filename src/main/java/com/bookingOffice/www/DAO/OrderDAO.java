@@ -25,7 +25,9 @@ public interface OrderDAO {
 	
 	public SellsReport getTotalReport(Date from, Date until);
 	
-	public List<SellsReport> getDailyReports(Date from, Date until);
+	public List<SellsReport> getDailyReportsByDates(Date from, Date until);
+	
+	public List<SellsReport> getDailyReportsByDestinations(Date from, Date until);
 	
 
 }

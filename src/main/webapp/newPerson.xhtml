@@ -13,19 +13,22 @@
 			<h:panelGrid columns="3" styleClass="OutText">
 				<h:outputText value="email:"></h:outputText>
 				<h:inputText id="email" value="#{securityBean.person.email}"
-					required="true" requiredMessage="#{msgs.fieldRequired}">
+					maxlength="60" required="true"
+					requiredMessage="#{msgs.fieldRequired}" styleClass="InText">
 				</h:inputText>
 				<h:message for="email" style="color:red" />
 
 				<h:outputText value="First Name:"></h:outputText>
 				<h:inputText id="firstName" value="#{securityBean.person.firstName}"
-					required="true" requiredMessage="#{msgs.fieldRequired}">
+					required="true" requiredMessage="#{msgs.fieldRequired}"
+					styleClass="InText">
 				</h:inputText>
 				<h:message for="firstName" style="color:red" />
 
 				<h:outputText value="Last Name:"></h:outputText>
 				<h:inputText id="lastName" value="#{securityBean.person.lastName}"
-					required="true" requiredMessage="#{msgs.fieldRequired}">
+					required="true" requiredMessage="#{msgs.fieldRequired}"
+					styleClass="InText">
 				</h:inputText>
 				<h:message for="lastName" style="color:red" />
 

@@ -11,13 +11,15 @@
 		<h:commandButton type="submit" onclick="PF('logInDialog').show()"
 			rendered="#{empty authorizationBean.userHeader}" style="float: right"
 			image="#{resource['images/log_in.png']}" />
+		<h:outputText value="Log In " style="float: right"
+			rendered="#{empty authorizationBean.userHeader}" styleClass="OutText" />
 		<h:commandButton type="submit" onclick="PF('logOutDialog').show()"
 			rendered="#{not empty authorizationBean.userHeader}"
 			style="float: right" image="#{resource['images/log_out.png']}" />
 		<p:outputLabel value="#{authorizationBean.userHeader}"
 			rendered="#{not empty authorizationBean.userHeader}"
 			style="float: right" />
-			<br/>
+		<br />
 
 		<p:dialog header="Log In" widgetVar="logInDialog" modal="true"
 			resizable="false">
@@ -31,7 +33,8 @@
 					<p:password id="password" value="#{authorizationBean.password}" />
 					<p:message for="email" style="color:red" />
 				</h:panelGrid>
-				<h:commandButton value="OK" action="#{authorizationBean.logIn()}" styleClass="Button"/>
+				<h:commandButton value="OK" action="#{authorizationBean.logIn()}"
+					styleClass="Button" />
 			</h:form>
 		</p:dialog>
 
@@ -39,7 +42,8 @@
 			resizable="false">
 			<h:form>
 				<p:outputLabel value="Wrong user name or password" />
-				<h:commandButton value="Ok" onclick="PF('wrongLogInMessage').hide()" styleClass="Button"/>
+				<h:commandButton value="Ok" onclick="PF('wrongLogInMessage').hide()"
+					styleClass="Button" />
 			</h:form>
 		</p:dialog>
 
@@ -47,9 +51,10 @@
 			<h:form>
 				<p:outputLabel value="Do you really want to log out?" />
 				<td />
-				<p:commandButton type="submit" value="YES"
-					action="#{authorizationBean.logOut()}" />
-				<p:commandButton value="NO" onclick="PF('logOutDialog').hide()" />
+				<h:commandButton type="submit" value="YES"
+					action="#{authorizationBean.logOut()}" styleClass="Button" />
+				<h:commandButton value="NO" onclick="PF('logOutDialog').hide()"
+					styleClass="Button" />
 			</h:form>
 		</p:dialog>
 

@@ -23,4 +23,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 		return (getPerson(email).getPasswordHash() == passwordHash);
 	}
 
+	public int getLastOrderId(int buyerId) {
+		return personDAO.getLastOrderId(buyerId);
+	}
+
 }

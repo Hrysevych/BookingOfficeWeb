@@ -14,7 +14,7 @@
 		<h:form rendered="#{authorizationBean.person.role.ordinal() != 4}">
 			<p:outputLabel
 				value="You are not allowed to see this page content. Return to customer area or login appropriate account"></p:outputLabel>
-			<p:commandButton value="Return" action="index"></p:commandButton>
+			<h:commandButton value="Return" action="index" styleClass="Button" />
 		</h:form>
 		<h:form rendered="#{authorizationBean.person.role.ordinal() == 4}">
 			<h:panelGrid columns="1">

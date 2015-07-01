@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.DAO.Flight;
@@ -26,6 +27,7 @@ public class CustomerBean {
 	private Flight flight = null;
 	private List<CartTicket> cart = new ArrayList<>();
 	private String allDataMessage = "";
+	private String cartReceipt = "";
 	private Date arrivalTime = new Date();
 	private Map<String, String> cities = new CitiesList().getCities();
 
@@ -87,6 +89,9 @@ public class CustomerBean {
 			allDataMessage = "You need to fill all empty fields of all tickets in cart!";
 			return "Cart";
 		}
+		cartReceipt = getCartSum();
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+		requestContext.execute("PF('receipt').show()");
 		allDataMessage = "";
 		ArrayList<Ticket> pureTickets = new ArrayList<Ticket>();
 		for (CartTicket cartTickets : cart) {
@@ -94,7 +99,8 @@ public class CustomerBean {
 		}
 		customerService.submitCart(pureTickets, id);
 		cart.clear();
-		return "Customer";
+		
+		return "Cart";
 	}
 
 	/**
@@ -185,6 +191,20 @@ public class CustomerBean {
 	 */
 	public void setCities(Map<String, String> cities) {
 		this.cities = cities;
+	}
+
+	/**
+	 * @return the cartReceipt
+	 */
+	public String getCartReceipt() {
+		return cartReceipt;
+	}
+
+	/**
+	 * @param cartReceipt the cartReceipt to set
+	 */
+	public void setCartReceipt(String cartReceipt) {
+		this.cartReceipt = cartReceipt;
 	}
 
 }

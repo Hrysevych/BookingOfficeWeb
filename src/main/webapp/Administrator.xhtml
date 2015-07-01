@@ -14,13 +14,13 @@
 		<h:form rendered="#{authorizationBean.person.role.ordinal() != 1}">
 			<p:outputLabel
 				value="You are not allowed to see this page content. Return to customer area or login appropriate account"></p:outputLabel>
-			<p:commandButton value="Return" action="index"></p:commandButton>
+			<h:commandButton value="Return" action="index" styleClass="Button"/>
 		</h:form>
 		<h:form rendered="#{authorizationBean.person.role.ordinal() == 1}">
 			<h:panelGrid columns="1">
 				<h:commandButton value="Release unpaid tickets"
 					action="#{administratorBean.releaseUnpaidTickets()}" styleClass="Button"/>
-				<h:outputText value="#{administratorBean.releaseMessage}"></h:outputText>
+				<h:outputText value="#{administratorBean.releaseMessage}" styleClass="OutText"></h:outputText>
 				<h:dataTable value="#{administratorBean.flights}" var="flight"
 					styleClass="Table" headerClass="TableHeader"
 					rowClasses="TableOddRow, TableEvenRow">

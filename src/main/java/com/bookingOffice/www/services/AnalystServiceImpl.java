@@ -24,8 +24,12 @@ public class AnalystServiceImpl implements AnalystService {
 		return orderingDAO.getTotalReport(from, until);
 	}
 
-	public List<SellsReport> getDailyReports(Date from, Date until) {
-		return orderingDAO.getDailyReports(from, until);
+	public List<SellsReport> getDailyReportsByDates(Date from, Date until) {
+		return orderingDAO.getDailyReportsByDates(from, until);
+	}
+
+	public List<SellsReport> getDailyReportsByDestinations(Date from, Date until) {
+		return orderingDAO.getDailyReportsByDestinations(from, until);
 	}
 
 }

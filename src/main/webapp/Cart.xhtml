@@ -10,10 +10,14 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h2>Customer's cart</h2>
-		<h:commandButton value="Return to search" action="index" styleClass="Button"/>
 		<h:form>
-			<p:outputLabel value="Total cart sum - " rendered="#{not empty customerBean.cart}" />
-			<p:outputLabel value="#{customerBean.getCartSum()}" rendered="#{not empty customerBean.cart}" />
+			<h:commandButton value="Return to search" action="index"
+				styleClass="Button" />
+			<br />
+			<p:outputLabel value="Total cart sum - "
+				rendered="#{not empty customerBean.cart}" styleClass="OutText" />
+			<p:outputLabel value="#{customerBean.getCartSum()}"
+				rendered="#{not empty customerBean.cart}" styleClass="OutText" />
 			<h:panelGrid columns="1">
 				<h:dataTable value="#{customerBean.cart}" var="ticket"
 					styleClass="Table" headerClass="TableHeader"
@@ -57,13 +61,12 @@
 					<h:column>
 						<h:commandButton value="Remove ticket"
 							action="#{customerBean.removeTicket(ticket)}"
-							image="#{resource['images/erase.png']}" 
-							immediate="true">
+							image="#{resource['images/erase.png']}" immediate="true">
 						</h:commandButton>
 					</h:column>
 				</h:dataTable>
 				<h:outputLabel value="#{customerBean.allDataMessage}"
-					style="color:red" />
+					style="color:red" styleClass="OutText"/>
 
 				<c:if test="#{authorizationBean.person eq null}">
 					#{authorizationBean.getDefaultPerson()}
@@ -71,9 +74,42 @@
 
 				<h:commandButton value="Submit order"
 					action="#{customerBean.submitCart(authorizationBean.person.getId())}"
-					rendered="#{not empty customerBean.cart}" styleClass="Button"/>
+					rendered="#{not empty customerBean.cart}" styleClass="Button" />
 			</h:panelGrid>
 		</h:form>
+
+		<p:dialog header="Receipt" widgetVar="receipt" modal="true"
+			resizable="false">
+			<h:form>
+				<h:panelGrid columns="1">
+					<p:outputLabel value="Thank you for the purchase!" />
+					<p:outputLabel
+						value="Your order total sum is #{customerBean.cartReceipt}" />
+					<p:outputLabel
+						value="Please, note that if you would not pay your order within " />
+					<p:outputLabel
+						value="three days it will expire and tickets would return to sale!" />
+					<p:outputLabel value="" />
+					<p:outputLabel
+						value="Your order ID is #{authorizationBean.getLastOrderId()}" />
+					<p:outputLabel value="" />
+					<p:outputLabel value="Payment details:" />
+					<p:outputLabel value="Bank of Switzerland" />
+					<p:outputLabel value="account number - 5556667821384234" />
+					<p:outputLabel
+						value="purpose of payment - 'order ##{authorizationBean.getLastOrderId()}'" />
+					<p:outputLabel
+						value="sum of payment - #{customerBean.cartReceipt}" />
+					<p:outputLabel
+						value="" />
+					<p:outputLabel
+						value="After making a payment please call us by phone (555) 6667755" />
+					<p:outputLabel
+						value="or send email to accountant@bookingOffice.com" />
+					<h:commandButton value="OK" action="index" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

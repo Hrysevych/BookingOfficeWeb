@@ -70,4 +70,12 @@ public class PersonDAOImpl implements PersonDAO {
 		}
 	}
 
+	public int getLastOrderId(int buyerId) {
+		TypedQuery<Order> query = em.createQuery(
+				"SELECT o FROM Ordering o WHERE o.buyerId = :buyerId", Order.class);
+		query.setParameter("buyerId", buyerId);
+		List<Order> orders = query.getResultList();
+		return orders.get(orders.size()-1).getId();
+	}
+
 }

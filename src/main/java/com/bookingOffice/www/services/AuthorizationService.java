@@ -10,4 +10,6 @@ public interface AuthorizationService {
 	
 	public boolean checkPassword(String email, int passwordHash);
 
+	public int getLastOrderId(int buyerId);
+
 }

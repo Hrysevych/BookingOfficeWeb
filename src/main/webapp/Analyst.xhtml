@@ -12,7 +12,7 @@
 		<h:form rendered="#{authorizationBean.person.role.ordinal() != 3}">
 			<p:outputLabel
 				value="You are not allowed to see this page content. Return to customer area or login appropriate account"></p:outputLabel>
-			<p:commandButton value="Return" action="index"></p:commandButton>
+			<h:commandButton value="Return" action="index" styleClass="Button" />
 		</h:form>
 		<h:form rendered="#{authorizationBean.person.role.ordinal() == 3}">
 			<h:panelGrid columns="2" styleClass="OutText">
@@ -24,8 +24,10 @@
 				<h:outputText value="end date for report:"></h:outputText>
 				<p:calendar value="#{analystBean.until}" pattern="dd/MM/yyyy"
 					timeZone="#{TimeZone.getDefault().getID()}" effect="clip" />
-				<h:commandButton type="submit" value="submit"
-					action="#{analystBean.refreshReports()}" styleClass="InText"></h:commandButton>
+				<h:commandButton type="submit" value="by dates"
+					action="#{analystBean.refreshReportsByDates()}" styleClass="InText"/>
+				<h:commandButton type="submit" value="by destinations"
+					action="#{analystBean.refreshReportsByDestinations()}" styleClass="InText"/>
 			</h:panelGrid>
 			<h:panelGrid columns="2" styleClass="OutText"
 				rendered="#{not empty analystBean.reports}">
@@ -40,9 +42,13 @@
 					styleClass="Table" headerClass="TableHeader"
 					rowClasses="TableOddRow, TableEvenRow"
 					rendered="#{not empty analystBean.reports}">
-					<h:column>
+					<h:column rendered="#{analystBean.type eq 'dates'}">
 						<f:facet name="header">Date</f:facet> 
 				#{report.date} 
+			</h:column>
+					<h:column rendered="#{analystBean.type eq 'destinations'}">
+						<f:facet name="header">Destination</f:facet> 
+				#{analystBean.getCityFromCode(report.destination)} 
 			</h:column>
 					<h:column>
 						<f:facet name="header">Tickets</f:facet> 

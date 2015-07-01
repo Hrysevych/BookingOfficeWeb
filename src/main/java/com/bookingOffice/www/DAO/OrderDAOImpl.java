@@ -98,13 +98,26 @@ public class OrderDAOImpl implements OrderDAO {
 		return report;
 	}
 
-	public List<SellsReport> getDailyReports(Date from, Date until) {
+	public List<SellsReport> getDailyReportsByDates(Date from, Date until) {
 		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
 				+ " (o.validDate, count(f.ticketPrice), sum(f.ticketPrice)) " 
 				+ "from Ordering o, Flight f, Ticket t "
 				+ "WHERE (o.validDate between :from and :until) "
 				+ "and (t.orderId = o.id) and (t.flightId = f.id) "
 				+ "group by o.validDate";
+		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
+		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
+		query.setParameter("until", ValidityDurationUtil.toValidDate(until));
+		return query.getResultList();
+	}
+
+	public List<SellsReport> getDailyReportsByDestinations(Date from, Date until) {
+		String sql = "SELECT new com.bookingOffice.www.util.SellsReport"
+				+ " (max(o.validDate), count(f.ticketPrice), sum(f.ticketPrice), f.arrival) " 
+				+ "from Ordering o, Flight f, Ticket t "
+				+ "WHERE (o.validDate between :from and :until) "
+				+ "and (t.orderId = o.id) and (t.flightId = f.id) "
+				+ "group by f.arrival";
 		TypedQuery<SellsReport> query = em.createQuery(sql, SellsReport.class);
 		query.setParameter("from", ValidityDurationUtil.toValidDate(from));
 		query.setParameter("until", ValidityDurationUtil.toValidDate(until));

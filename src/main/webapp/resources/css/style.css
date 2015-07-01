@@ -17,13 +17,11 @@
 	text-align: center;
 	background: none repeat scroll 0 0 #FFFFFFF;
 	background-color: white;
-	
 }
 
 .TableEvenRow {
 	text-align: center;
 	background: none repeat scroll 0 0 #D3D3D3;
-	
 }
 
 td {
@@ -47,10 +45,14 @@ td {
 
 .Button {
 	font-size: 130%
-	
 }
 
-h1, h2, h3{
+h1 {
+	text-align: center;
+	font-size: 300%;
+}
+
+h2, h3 {
 	text-align: center;
 	font-size: 200%;
 }

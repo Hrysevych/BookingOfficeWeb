@@ -28,8 +28,7 @@
 					timeZone="#{TimeZone.getDefault().getID()}" effect="clip" />
 			</h:panelGrid>
 			<h:commandButton value="Submit"
-				action="#{customerBean.getFlightsFiltered}"
-				image="#{resource['images/go_forward.png']}" />
+				action="#{customerBean.getFlightsFiltered}" styleClass="Button"/>
 			<h:commandButton action="Cart" image="#{resource['images/cart.png']}"
 				style="float: right;" rendered="#{not empty customerBean.cart}" />
 

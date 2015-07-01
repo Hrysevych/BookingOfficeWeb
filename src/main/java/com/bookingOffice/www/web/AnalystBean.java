@@ -4,12 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
@@ -17,6 +19,7 @@ import org.primefaces.model.chart.LinearAxis;
 import org.springframework.context.annotation.Scope;
 
 import com.bookingOffice.www.services.AnalystService;
+import com.bookingOffice.www.util.CitiesList;
 import com.bookingOffice.www.util.SellsReport;
 import com.bookingOffice.www.util.ValidityDurationUtil;
 
@@ -33,11 +36,32 @@ public class AnalystBean {
 	private SellsReport totalReport = null;
 	private SellsReport report = null;
 
+	private Map<String, String> cities = new CitiesList().getCities();
+
+	private String type = "";
+
 	private LineChartModel model;
 
-	public String refreshReports() {
+	public String getCityFromCode(String code) {
+		for (Map.Entry<String, String> city : cities.entrySet()) {
+			if (city.getValue().equals(code))
+				return city.getKey();
+		}
+		return "";
+	}
+
+	public String refreshReportsByDates() {
 		totalReport = analystService.getTotalReport(from, until);
-		reports = analystService.getDailyReports(from, until);
+		reports = analystService.getDailyReportsByDates(from, until);
+		type = "dates";
+		createModel();
+		return "Analyst";
+	}
+
+	public String refreshReportsByDestinations() {
+		totalReport = analystService.getTotalReport(from, until);
+		reports = analystService.getDailyReportsByDestinations(from, until);
+		type = "destinations";
 		createModel();
 		return "Analyst";
 	}
@@ -51,75 +75,110 @@ public class AnalystBean {
 	private void createModel() {
 		model = new LineChartModel();
 		model.setLegendPosition("e");
+		if (type.equals("dates")) {
+			LineChartSeries ticketsByDates = new LineChartSeries();
+			ticketsByDates.setLabel("Tickets");
+			ticketsByDates.setXaxis(AxisType.X);
+			ticketsByDates.setYaxis(AxisType.Y);
 
-		LineChartSeries tickets = new LineChartSeries();
-		tickets.setLabel("Tickets");
-		tickets.setXaxis(AxisType.X);
-		tickets.setYaxis(AxisType.Y);
+			LineChartSeries sumsByDates = new LineChartSeries();
+			sumsByDates.setLabel("Sum");
+			sumsByDates.setXaxis(AxisType.X);
+			sumsByDates.setYaxis(AxisType.Y2);
 
-		LineChartSeries sums = new LineChartSeries();
-		sums.setLabel("Sum");
-		sums.setXaxis(AxisType.X);
-		sums.setYaxis(AxisType.Y2);
+			double maxSum = 0;
+			int maxTickets = 0;
+			Date minDate = until;
+			Date maxDate = from;
 
-		double maxSum = 0;
-		int maxTickets = 0;
-		Date minDate = until;
-		Date maxDate = from;
-		for (SellsReport sellsReport : reports) {
-			tickets.set(formatDate(sellsReport.getDate()),
-					sellsReport.getTicketsQuantity());
-			sums.set(formatDate(sellsReport.getDate()),
-					sellsReport.getTotalSum());
-			
-			if (sellsReport.getTotalSum() > maxSum) {
-				maxSum = sellsReport.getTotalSum();
+			for (SellsReport sellsReport : reports) {
+				ticketsByDates.set(formatDate(sellsReport.getDate()),
+						sellsReport.getTicketsQuantity());
+				sumsByDates.set(formatDate(sellsReport.getDate()),
+						sellsReport.getTotalSum());
+
+				if (sellsReport.getTotalSum() > maxSum) {
+					maxSum = sellsReport.getTotalSum();
+				}
+
+				if (sellsReport.getTicketsQuantity() > maxTickets) {
+					maxTickets = sellsReport.getTicketsQuantity();
+				}
+
+				if (sellsReport.getDate().before(minDate)) {
+					minDate = sellsReport.getDate();
+				}
+
+				if (sellsReport.getDate().after(maxDate)) {
+					maxDate = sellsReport.getDate();
+				}
 			}
-			
-			if (sellsReport.getTicketsQuantity() > maxTickets) {
-				maxTickets = sellsReport.getTicketsQuantity();
-			}
-			
-			if (sellsReport.getDate().before(minDate)) {
-				minDate = sellsReport.getDate();
-			}
-			
-			if (sellsReport.getDate().after(maxDate)) {
-				maxDate = sellsReport.getDate();
-			}
+
+			minDate = ValidityDurationUtil.toNormalDate(minDate);
+
+			maxDate = ValidityDurationUtil.toValidDate(maxDate);
+
+			maxTickets *= 1.25;
+			maxTickets += 1;
+
+			maxSum *= 1.25;
+			maxSum += 10;
+
+			model.addSeries(ticketsByDates);
+			model.addSeries(sumsByDates);
+
+			model.setTitle("Reports");
+			DateAxis xAxis = new DateAxis("Dates");
+			xAxis.setMin(formatDate(minDate));
+			xAxis.setMax(formatDate(maxDate));
+			xAxis.setTickFormat("%#d %b %y");
+			model.getAxes().put(AxisType.X, xAxis);
+
+			Axis yAxis = model.getAxis(AxisType.Y);
+			yAxis.setLabel("Tickets sold");
+			yAxis.setMin(0);
+			yAxis.setMax(maxTickets);
+
+			Axis y2Axis = new LinearAxis("Sum");
+			y2Axis.setMin(0);
+			y2Axis.setMax(maxSum);
+			model.getAxes().put(AxisType.Y2, y2Axis);
 		}
 
-		minDate = ValidityDurationUtil.toNormalDate(minDate);
-		
-		maxDate = ValidityDurationUtil.toValidDate(maxDate);
-		
-		maxTickets *= 1.25;
-		maxTickets += 1;
-		
-		maxSum *= 1.25;
-		maxSum += 10;
+		if (type.equals("destinations")) {
+			LineChartSeries ticketsByDestinations = new LineChartSeries(
+					"Tickets");
+			ticketsByDestinations.setXaxis(AxisType.X);
+			ticketsByDestinations.setYaxis(AxisType.Y);
 
-		model.addSeries(tickets);
-		model.addSeries(sums);
+			LineChartSeries sumsByDestinations = new LineChartSeries();
+			sumsByDestinations.setLabel("Sum");
+			sumsByDestinations.setXaxis(AxisType.X);
+			sumsByDestinations.setYaxis(AxisType.Y2);
 
-		model.setTitle("Reports");
+			for (SellsReport sellsReport : reports) {
+				ticketsByDestinations.set(
+						getCityFromCode(sellsReport.getDestination()),
+						sellsReport.getTicketsQuantity());
+				sumsByDestinations.set(
+						getCityFromCode(sellsReport.getDestination()),
+						sellsReport.getTotalSum());
+			}
 
-		DateAxis xAxis = new DateAxis("Dates");
-		xAxis.setMin(formatDate(minDate));
-		xAxis.setMax(formatDate(maxDate));
-		xAxis.setTickFormat("%#d %b %y");
-		model.getAxes().put(AxisType.X, xAxis);
+			model.addSeries(ticketsByDestinations);
+			model.addSeries(sumsByDestinations);
 
-		Axis yAxis = model.getAxis(AxisType.Y);
-		yAxis.setLabel("Tickets sold");
-		yAxis.setMin(0);
-		yAxis.setMax(maxTickets);
+			model.setTitle("Reports");
+			CategoryAxis xAxis = new CategoryAxis("Destinations");
+			model.getAxes().put(AxisType.X, xAxis);
 
-		Axis y2Axis = new LinearAxis("Sum");
-		y2Axis.setMin(0);
-		y2Axis.setMax(maxSum);
+			Axis yAxis = model.getAxis(AxisType.Y);
+			yAxis.setLabel("Tickets sold");
 
-		model.getAxes().put(AxisType.Y2, y2Axis);
+			Axis y2Axis = new LinearAxis("Sum");
+			model.getAxes().put(AxisType.Y2, y2Axis);
+		}
+
 	}
 
 	public AnalystBean() {
@@ -220,6 +279,36 @@ public class AnalystBean {
 	 */
 	public void setModel(LineChartModel model) {
 		this.model = model;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the cities
+	 */
+	public Map<String, String> getCities() {
+		return cities;
+	}
+
+	/**
+	 * @param cities
+	 *            the cities to set
+	 */
+	public void setCities(Map<String, String> cities) {
+		this.cities = cities;
 	}
 
 }
